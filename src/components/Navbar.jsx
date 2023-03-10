@@ -6,7 +6,7 @@ function Navbar() {
     <div className='navbar'>
         <div className="navbar__section">
             <h3 className='navbar__header'>BeSocial</h3>
-            <input className='navbar__input' type="text" placeholder='Search...'/>
+            <input className='navbar__input input' type="text" placeholder='Search...'/>
             <div className='icon navbar__search-icon'>
                 <SearchOutlinedIcon/>
             </div>

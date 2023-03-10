@@ -19,7 +19,7 @@ function PostsList() {
             <div key={post._id} className='post'>
                 <div className='post__user'>
                     <img className='post__user__img' src={`http://localhost:4001${post.user.avatar}`} alt='user_pic'/>
-                    <h3 className='post__user__name'>{post.user.name}</h3>
+                    <h4 className='post__user__name'>{post.user.name}</h4>
                     <div className='post__user__icon icon'><PersonAddAlt1OutlinedIcon fontSize='small'/></div>
                 </div>
                 <p className='post__content'>{post.content}</p>

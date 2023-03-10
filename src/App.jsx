@@ -1,17 +1,11 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosts } from './actions/posts';
+import React from 'react';
+import Home from './pages/Home';
 function App() {
-
-  const posts = useSelector((state) => state.posts);
-  const dispatch = useDispatch();
-  // console.log(posts);
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, []);
-
-  return <div>App</div>;
+  return (
+    <div className='app'>
+        <Home/>
+    </div>
+  )
 }
 
 export default App;

@@ -2,7 +2,7 @@ import { UPDATE_POSTS,FETCH_POSTS_ERROR } from './actionTypes';
 
 export const fetchPosts = () => {
   return (dispatch) => {
-    const url = 'http://localhost:3001/api/v1/posts';
+    const url = 'http://localhost:4001/api/v1/posts';
     fetch(url)
       .then((res) => res.json())
       .then((data) => {

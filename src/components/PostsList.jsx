@@ -14,13 +14,13 @@ function PostsList() {
   }, []);
 
   return (
-    <div className="posts-container">
+    <div className="postslist-widget posts-container flex-col">
         {posts.map(post=>(
-            <div key={post._id} className='post'>
-                <div className='post__user'>
-                    <img className='post__user__img' src={`http://localhost:4001${post.user.avatar}`} alt='user_pic'/>
-                    <h4 className='post__user__name'>{post.user.name}</h4>
-                    <div className='post__user__icon icon'><PersonAddAlt1OutlinedIcon fontSize='small'/></div>
+            <div key={post._id} className='widget-wrapper'>
+                <div className='user'>
+                    <img className='user__img' src={`http://localhost:4001${post.user.avatar}`} alt='user_pic'/>
+                    <h4 className='user__name'>{post.user.name}</h4>
+                    <div className='user__icon icon'><PersonAddAlt1OutlinedIcon fontSize='small'/></div>
                 </div>
                 <p className='post__content'>{post.content}</p>
                 <div className='post__interactions'>
@@ -39,6 +39,7 @@ function PostsList() {
                 </div>
             </div>
         ))}
+        
     </div>
   )
 }

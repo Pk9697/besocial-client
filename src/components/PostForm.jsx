@@ -2,9 +2,9 @@ import React from 'react'
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 function PostForm() {
   return (
-    <div className='post-form'>
+    <div className='postform-widget widget-wrapper'>
         <section className='post-form__section1'>
-            <img className='post__user__img' src="/assets/p1.jpeg" alt="user_img" />
+            <img className='user__img' src="/assets/p1.jpeg" alt="user_img" />
             <input className='input post-form__input' type="text" placeholder={`What's on your mind...`}/>
         </section>
         <hr style={{width:"100%"}}/>

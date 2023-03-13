@@ -407,10 +407,23 @@ h5 {
   letter-spacing: 1px;
   font-weight: var(--fw-med);
   /* font-family: var(--ff-primary); */
+  cursor: pointer;
 }
 
 .login__btn:hover{
-  cursor: pointer;
   background-color: var(--clr-accent-background);
   color: var(--clr-accent);
 }
+
+.login__btn:disabled{
+  cursor: not-allowed;
+  background-color: rgb(246, 91, 91);
+}
+
+/* .disabled{
+  cursor: not-allowed;
+  background-color: rgb(246, 91, 91);
+}
+.disabled:hover{
+  background-color: rgb(252, 62, 62);
+} */

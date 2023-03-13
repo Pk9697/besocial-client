@@ -1,8 +1,9 @@
+import { APIUrls } from '../helpers/urls';
 import { UPDATE_POSTS,FETCH_POSTS_ERROR } from './actionTypes';
 
 export const fetchPosts = () => {
   return (dispatch) => {
-    const url = 'http://localhost:4001/api/v1/posts';
+    const url = APIUrls.fetchPosts();
     fetch(url)
       .then((res) => res.json())
       .then((data) => {

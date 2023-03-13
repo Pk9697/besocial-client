@@ -35,6 +35,7 @@
     0.125em 0.125em 0.25em rgba(0, 0, 0, 0.15);
   /* border-radius */
   --br: 10px;
+  --br2: 5px;
   /* padding */
   --pad: 1.5em;
 }
@@ -53,13 +54,15 @@
 /* General Styles */
 
 body {
-  background-color: var(--clr-light);
+  background-color: var(--clr-background);
   color: var(--clr-dark);
   margin: 0;
   padding: 0;
   font-family: var(--ff-primary);
   font-size: var(--fs-body);
   line-height: 1.3;
+  /* width: 100%;
+  height: 100%; */
 }
 
 img {
@@ -69,6 +72,10 @@ img {
   max-width: 100%;
 }
 
+.link{
+  text-decoration: none;
+  color: inherit;
+}
 /* Typography */
 
 h1,
@@ -160,9 +167,11 @@ h5 {
   /* margin-top: 1.5em; */
 }
 
-.app {
+/* .app {
   background-color: var(--clr-background);
-}
+  height: 100vh;
+  height: 100%;
+} */
 
 /* user */
 
@@ -232,8 +241,10 @@ h5 {
 .navbar__section {
   display: flex;
   gap: 1em;
-  position: relative;
   align-items: center;
+}
+#navbar__section1 {
+  position: relative;
 }
 .navbar__header {
   color: var(--clr-accent);
@@ -274,7 +285,7 @@ h5 {
 }
 
 .navbar__items-container {
-  display: none;
+  /* display: none; */
   position: absolute;
   right: 0;
   top: 100%;
@@ -296,6 +307,9 @@ h5 {
   background-color: var(--clr-accent-background);
 }
 
+.expand-icon {
+  display: none;
+}
 @media (min-width: 700px) {
   .navbar__menu {
     display: block;
@@ -305,6 +319,12 @@ h5 {
   }
   .navbar__items-container {
     width: 250px;
+  }
+  .expand-icon {
+    /* align-self: center; */
+    display: flex;
+    position: absolute;
+    right: 1%;
   }
 }
 
@@ -352,4 +372,44 @@ h5 {
   border-radius: var(--br);
 }
 
-/* Friends List */
+/*login*/
+.login{
+  padding: var(--pad) 6%;
+  display: flex;
+  flex-direction: column;
+  /* gap: 1.5em; */
+}
+
+.mw-700{
+  max-width: 700px;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.login-wrapper{
+  gap:2em;
+}
+
+.login__input{
+  display: inline-block;
+  padding: 1em 1.2em;
+  /* width: 90%; */
+  font-family: var(--ff-primary);
+  font-size: var(--fs-body);
+  border-radius: var(--br2);
+}
+
+.login__btn{
+  background-color: var(--clr-accent);
+  color: var(--clr-light);
+  border:none;
+  letter-spacing: 1px;
+  font-weight: var(--fw-med);
+  /* font-family: var(--ff-primary); */
+}
+
+.login__btn:hover{
+  cursor: pointer;
+  background-color: var(--clr-accent-background);
+  color: var(--clr-accent);
+}

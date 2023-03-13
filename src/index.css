@@ -185,6 +185,7 @@ h5 {
   height: 60px;
   object-fit: cover;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 .user__name {
   color: var(--clr-primary);

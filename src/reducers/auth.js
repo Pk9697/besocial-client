@@ -1,4 +1,4 @@
-import { LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS } from "../actions/actionTypes"
+import { LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "../actions/actionTypes"
 
 const initialState={
     user:{},
@@ -9,7 +9,9 @@ const initialState={
 }
 export const authReducer=(state=initialState,action)=>{
     switch(action.type){
-        case LOGIN_START:{
+        case LOGIN_START:
+        case REGISTER_START:
+        {
             return {
                 ...state,
                 inProgress:true,
@@ -19,7 +21,9 @@ export const authReducer=(state=initialState,action)=>{
                 error:null
             }
         }
-        case LOGIN_SUCCESS:{
+        case LOGIN_SUCCESS:
+        case REGISTER_SUCCESS:
+        {
             return {
                 ...state,
                 user:action.payload.user,
@@ -29,7 +33,9 @@ export const authReducer=(state=initialState,action)=>{
                 error:null
             }
         }
-        case LOGIN_ERROR:{
+        case LOGIN_ERROR:
+        case REGISTER_ERROR:
+        {
             return {
                 ...state,
                 error:action.payload,
@@ -37,6 +43,17 @@ export const authReducer=(state=initialState,action)=>{
                 token:null,
                 inProgress:false,
                 isLoggedIn:false
+            }
+        }
+
+        case LOG_OUT:{
+            return {
+                ...state,
+                inProgress:false,
+                user:{},
+                token:null,
+                isLoggedIn:false,
+                error:null
             }
         }
         default:return state

@@ -4,8 +4,15 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import { Link } from 'react-router-dom';
+import {useSelector,useDispatch} from 'react-redux'
+import { logOut } from '../actions/auth';
 function Navbar() {
     const [isMenuClicked, setIsMenuClicked] = useState(false)
+    const dispatch=useDispatch()
+    const auth=useSelector(state=>state.auth)
+    function handleLogOut(){
+        dispatch(logOut())
+    }
   return (
     <div className='navbar'>
         <div className="navbar__section" id='navbar__section1'>
@@ -17,7 +24,8 @@ function Navbar() {
         </div>
         <div className="navbar__section" id='navbar__section2'>
             <div className='navbar__menu' onClick={()=>setIsMenuClicked(prev=>!prev)}>
-                <p>Name</p>
+                {/* {auth.isLoggedIn?<p>{auth.user.name}</p>:''} */}
+                <p>{auth.isLoggedIn?auth.user.name:'Welcome'}</p>
             </div>
             <div className='icon expand-icon'>
                 {isMenuClicked?<ExpandLessOutlinedIcon/>:<ExpandMoreOutlinedIcon/>}
@@ -27,9 +35,9 @@ function Navbar() {
             </div>
             {isMenuClicked &&
                 <div className="navbar__items-container" onClick={()=>setIsMenuClicked(false)}>
-                    <p className='navbar__items item1'>Name</p>
+                    <p className='navbar__items item1'>{auth.isLoggedIn?auth.user.name:'Welcome'}</p>
                     <Link className='link' to='/login'><p className='navbar__items'>Log In</p></Link>
-                    <p className='navbar__items'>Log Out</p>
+                    <p className='navbar__items' onClick={handleLogOut}>Log Out</p>
                     <Link className='link' to='/register'><p className='navbar__items'>Register</p></Link>
                 </div>
             }

@@ -41,8 +41,11 @@ export function login(formFields){
         })
         .then(res=>res.json())
         .then(data=>{
-            // console.log(data)
+            console.log(data)
             if(data.success){
+                //for persisting user when auth is lost when reloading
+                localStorage.setItem('token',data.data.token)
+                // console.log(localStorage.getItem('token'))
                 dispatch(loginSuccess(data.data))
             }else{
                 dispatch(loginError(data.message))

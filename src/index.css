@@ -417,7 +417,7 @@ h5 {
 
 .login__btn:disabled{
   cursor: not-allowed;
-  background-color: rgb(246, 91, 91);
+  /* background-color: rgb(246, 91, 91); */
 }
 
 /* .disabled{

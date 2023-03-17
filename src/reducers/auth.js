@@ -1,4 +1,4 @@
-import { LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "../actions/actionTypes"
+import { AUTHENTICATE_USER, LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "../actions/actionTypes"
 
 const initialState={
     user:{},
@@ -46,6 +46,17 @@ export const authReducer=(state=initialState,action)=>{
             }
         }
 
+        case AUTHENTICATE_USER:{
+            return {
+                ...state,
+                inProgress:false,
+                user:action.payload.user,
+                token:action.payload.token,
+                isLoggedIn:true,
+                error:null
+            }
+        }
+        
         case LOG_OUT:{
             return {
                 ...state,
@@ -56,6 +67,8 @@ export const authReducer=(state=initialState,action)=>{
                 error:null
             }
         }
+
+
         default:return state
     }
 }

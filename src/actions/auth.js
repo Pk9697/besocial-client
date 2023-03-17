@@ -1,5 +1,5 @@
 import { APIUrls } from "../helpers/urls";
-import { LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "./actionTypes";
+import { AUTHENTICATE_USER, LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "./actionTypes";
 
 /* LOGIN action creaters */
 
@@ -51,6 +51,15 @@ export function login(formFields){
                 dispatch(loginError(data.message))
             }
         })
+    }
+}
+
+/* AUTHENTICATE user */
+
+export function authenticateUser(data){
+    return {
+        type:AUTHENTICATE_USER,
+        payload:data
     }
 }
 

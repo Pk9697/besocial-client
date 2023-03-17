@@ -10,7 +10,11 @@ function Navbar() {
     const [isMenuClicked, setIsMenuClicked] = useState(false)
     const dispatch=useDispatch()
     const auth=useSelector(state=>state.auth)
+    const {user,isLoggedIn}=auth
     function handleLogOut(){
+        if(localStorage.getItem('token')){
+            localStorage.removeItem('token')
+        }
         dispatch(logOut())
     }
   return (
@@ -25,7 +29,7 @@ function Navbar() {
         <div className="navbar__section" id='navbar__section2'>
             <div className='navbar__menu' onClick={()=>setIsMenuClicked(prev=>!prev)}>
                 {/* {auth.isLoggedIn?<p>{auth.user.name}</p>:''} */}
-                <p>{auth.isLoggedIn?auth.user.name:'Welcome'}</p>
+                <p>{isLoggedIn?user.name:'Welcome'}</p>
             </div>
             <div className='icon expand-icon'>
                 {isMenuClicked?<ExpandLessOutlinedIcon/>:<ExpandMoreOutlinedIcon/>}
@@ -35,10 +39,17 @@ function Navbar() {
             </div>
             {isMenuClicked &&
                 <div className="navbar__items-container" onClick={()=>setIsMenuClicked(false)}>
-                    <p className='navbar__items item1'>{auth.isLoggedIn?auth.user.name:'Welcome'}</p>
-                    <Link className='link' to='/login'><p className='navbar__items'>Log In</p></Link>
-                    <p className='navbar__items' onClick={handleLogOut}>Log Out</p>
-                    <Link className='link' to='/register'><p className='navbar__items'>Register</p></Link>
+                    {isLoggedIn?
+                        <>
+                            <p className='navbar__items item1'>{user.name}</p>
+                            <p className='navbar__items' onClick={handleLogOut}>Log Out</p>
+                        </>
+                        :
+                        <>
+                            <Link className='link' to='/login'><p className='navbar__items'>Log In</p></Link>
+                            <Link className='link' to='/register'><p className='navbar__items'>Register</p></Link>
+                        </>
+                    }
                 </div>
             }
         </div>

@@ -6,18 +6,21 @@ import {
   Navigate,
 } from 'react-router-dom';
 import jwt_decode from "jwt-decode"
+import {useDispatch} from "react-redux"
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
+import { authenticateUser } from './actions/auth';
 function App() {
-
+  const dispatch=useDispatch();
   useEffect(() => {
     const token=localStorage.getItem('token')
     if(token){
       const user=jwt_decode(token)
-      console.log(user)
+      // console.log(user)
+      dispatch(authenticateUser({user,token}))
     }
   }, [])
   

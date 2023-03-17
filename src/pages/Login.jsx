@@ -1,7 +1,7 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {useDispatch,useSelector} from "react-redux"
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { login} from '../actions/auth'
+import { clearErrorState, login} from '../actions/auth'
 import Alert from '../components/Alert';
 function Login() {
     const [formFields,setFormFields]=useState({
@@ -11,6 +11,13 @@ function Login() {
     const [isAlertClosed, setIsAlertClosed] = useState(false)
     const dispatch=useDispatch()
     const auth=useSelector(state=>state.auth)
+
+    useEffect(() => {
+      return () => {
+        dispatch(clearErrorState())
+      }
+    }, [])
+    
     // console.log(auth)
     function handleChange(e){
         const {name,value} =e.target

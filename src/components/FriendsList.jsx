@@ -13,22 +13,12 @@ function FriendsList() {
     <div className='friendslist-widget widget-wrapper'>
       <h4>Friends List</h4>
       {friends.map(friend=>(
-        <div className='user'>
+        <div key={friend._id} className='user'>
           <img src={`${BASE_ROOT}${friend.to_user.avatar}`} className='user__img' alt="friend_pic" />
           <h4 className='user__name'>{friend.to_user.name}</h4>
           <div className='user__icon icon'><PersonRemoveOutlinedIcon/></div>
         </div>
       ))}
-      {/* <div className='user'>
-        <img src="/assets/p2.jpeg" className='user__img' alt="friend_pic" />
-        <h4 className='user__name'>Fname Lname</h4>
-        <div className='user__icon icon'><PersonRemoveOutlinedIcon/></div>
-      </div>
-      <div className='user'>
-        <img src="/assets/p3.jpeg" className='user__img' alt="friend_pic" />
-        <h4 className='user__name'>Fname Lname</h4>
-        <div className='user__icon icon'><PersonRemoveOutlinedIcon/></div>
-      </div> */}
     </div>
   )
 }

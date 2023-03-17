@@ -1,4 +1,4 @@
-import { AUTHENTICATE_USER, LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "../actions/actionTypes"
+import { AUTHENTICATE_USER, CLEAR_ERROR_STATE, LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "../actions/actionTypes"
 
 const initialState={
     user:{},
@@ -9,6 +9,15 @@ const initialState={
 }
 export const authReducer=(state=initialState,action)=>{
     switch(action.type){
+
+        case CLEAR_ERROR_STATE:
+            {
+                return {
+                    ...state,
+                    error:null
+                }
+
+            }
         case LOGIN_START:
         case REGISTER_START:
         {

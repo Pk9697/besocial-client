@@ -1,7 +1,7 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {useDispatch,useSelector} from "react-redux"
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { register } from '../actions/auth';
+import { clearErrorState, register } from '../actions/auth';
 import Alert from '../components/Alert';
 function Register() {
   const [formFields,setFormFields]=useState({
@@ -14,6 +14,12 @@ function Register() {
   const dispatch=useDispatch()
   const auth=useSelector(state=>state.auth)
   const {name,email,password,confirm_password}=formFields
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearErrorState())
+    }
+  }, [])
 
   function handleChange(e){
     const {name,value} =e.target

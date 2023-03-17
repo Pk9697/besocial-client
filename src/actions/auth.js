@@ -1,5 +1,5 @@
 import { APIUrls } from "../helpers/urls";
-import { AUTHENTICATE_USER, LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "./actionTypes";
+import { AUTHENTICATE_USER, CLEAR_ERROR_STATE, LOGIN_ERROR, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, REGISTER_ERROR, REGISTER_START, REGISTER_SUCCESS } from "./actionTypes";
 
 /* LOGIN action creaters */
 
@@ -105,5 +105,11 @@ export function register(formFields){
                 dispatch(registerError(data.message))
             }
         })
+    }
+}
+
+export function clearErrorState(){
+    return {
+        type:CLEAR_ERROR_STATE
     }
 }

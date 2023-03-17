@@ -116,6 +116,18 @@ h5 {
   display: flex;
   flex-direction: column;
   gap: 1.5em;
+  max-width: 1700px;
+  margin: 0 auto;
+
+}
+
+.grid-notloggedin{
+  padding: var(--pad) 6%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 @media (min-width: 700px) {
@@ -127,6 +139,16 @@ h5 {
     grid-template-areas:
       'section user'
       'section friends'
+      'section allusers'
+      'section .';
+  }
+
+  .grid-notloggedin {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+
+    grid-template-areas:
       'section allusers'
       'section .';
   }

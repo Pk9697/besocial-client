@@ -6,7 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import jwt_decode from "jwt-decode"
-import {useDispatch} from "react-redux"
+import {useDispatch,useSelector} from "react-redux"
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
@@ -15,6 +15,8 @@ import NotFound from './pages/NotFound';
 import { authenticateUser } from './actions/auth';
 function App() {
   const dispatch=useDispatch();
+  const auth=useSelector(state=>state.auth)
+  const {isLoggedIn}=auth
   useEffect(() => {
     const token=localStorage.getItem('token')
     if(token){
@@ -23,6 +25,7 @@ function App() {
       dispatch(authenticateUser({user,token}))
     }
   }, [])
+
   
   return (
     <Router>
@@ -30,8 +33,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={!isLoggedIn?<Login />:<Navigate to="/"/>} />
+          <Route path="/register" element={!isLoggedIn?<Register />:<Navigate to="/"/>} />
           <Route path='*' element={<NotFound />}/>
         </Routes>
       </div>

@@ -20,3 +20,7 @@ export const REGISTER_ERROR = 'REGISTER_ERROR';
 //clear auth state to remove err message once comp is destroyed
 export const CLEAR_ERROR_STATE='CLEAR_ERROR_STATE'
 
+//fetch all users
+export const FETCH_ALL_USERS='FETCH_ALL_USERS'
+export const UPDATE_ALL_USERS='UPDATE_ALL_USERS'
+

@@ -16,9 +16,9 @@ function Home() {
               <>
                 <UserWidget/>
                 <FriendsList/>
+                <UsersListWidget/>
               </>
             }
-            <UsersListWidget/>
           <section className='flex-col grid__section'>
             {isLoggedIn && <PostForm/>}
             <PostsList/>

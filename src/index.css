@@ -111,6 +111,13 @@ h5 {
 	gap: 1.5em;
 }
 
+.flex-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1.5em;
+}
+
 .grid {
 	/* padding: var(--pad); */
 	padding: var(--pad) 6%;
@@ -211,6 +218,12 @@ h5 {
 	flex-shrink: 0;
 	box-shadow: var(--bs2);
 }
+
+.user__img--large {
+	width: 100px;
+	height: 100px;
+}
+
 .user__name {
 	color: var(--clr-primary);
 	font-weight: var(--fw-med);
@@ -460,8 +473,8 @@ h5 {
 	padding-bottom: 1em;
 }
 
-.flex-row {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+/* settings */
+.settings__btn{
+	width: 50%;
+	max-width: 200px;
 }

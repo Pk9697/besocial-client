@@ -13,6 +13,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import { authenticateUser } from './actions/auth'
+import Settings from './pages/Settings'
 function App() {
 	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
@@ -39,6 +40,10 @@ function App() {
 					<Route
 						path='/register'
 						element={!isLoggedIn ? <Register /> : <Navigate to='/' />}
+					/>
+					<Route
+						path='/settings'
+						element={isLoggedIn ? <Settings /> : <Navigate to='/login' />}
 					/>
 					<Route path='*' element={<NotFound />} />
 				</Routes>

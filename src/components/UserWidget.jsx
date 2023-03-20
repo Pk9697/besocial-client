@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
 import { BASE_ROOT } from '../helpers/urls'
+import { Link } from 'react-router-dom'
 function UserWidget() {
 	const auth = useSelector((state) => state.auth)
 	const { user, isLoggedIn } = auth
@@ -24,9 +25,9 @@ function UserWidget() {
 						{friendsCount} friend{friendsCount > 1 ? 's' : ''}
 					</p>
 				</div>
-				<div className='user__icon icon'>
+				<Link to='/settings' className='user__icon icon'>
 					<ManageAccountsOutlinedIcon />
-				</div>
+				</Link>
 			</section>
 		</div>
 	)

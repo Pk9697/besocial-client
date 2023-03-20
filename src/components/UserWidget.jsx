@@ -19,7 +19,7 @@ function UserWidget() {
 					alt='user_pic'
 				/>
 				<div>
-					<h4 className='user__name'>{name}</h4>
+					<h5 className='user__name'>{name}</h5>
 					<p>
 						{friendsCount} friend{friendsCount > 1 ? 's' : ''}
 					</p>

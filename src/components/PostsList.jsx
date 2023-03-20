@@ -23,7 +23,7 @@ function PostsList() {
 							src={`http://localhost:4001${post.user.avatar}`}
 							alt='user_pic'
 						/>
-						<h4 className='user__name'>{post.user.name}</h4>
+						<h5 className='user__name'>{post.user.name}</h5>
 						<div className='user__icon icon'>
 							<PersonAddAlt1OutlinedIcon fontSize='small' />
 						</div>

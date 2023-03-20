@@ -21,7 +21,7 @@ function UsersListWidget() {
 						className='user__img'
 						alt='friend_pic'
 					/>
-					<h4 className='user__name'>{user.name}</h4>
+					<h5 className='user__name'>{user.name}</h5>
 					<div className='user__icon icon'>
 						<PersonAddAlt1OutlinedIcon />
 					</div>

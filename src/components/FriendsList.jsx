@@ -21,7 +21,7 @@ function FriendsList() {
 						className='user__img'
 						alt='friend_pic'
 					/>
-					<h4 className='user__name'>{friend.to_user.name}</h4>
+					<h5 className='user__name'>{friend.to_user.name}</h5>
 					<div className='user__icon icon'>
 						<PersonRemoveOutlinedIcon />
 					</div>

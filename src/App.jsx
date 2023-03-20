@@ -22,7 +22,6 @@ function App() {
 		const token = localStorage.getItem('token')
 		if (token) {
 			const user = jwt_decode(token)
-			// console.log(user)
 			dispatch(authenticateUser({ user, token }))
 		}
 	}, [])
@@ -33,17 +32,24 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path='/' element={<Home />} />
-					<Route
+					{/* <Route
 						path='/login'
 						element={!isLoggedIn ? <Login /> : <Navigate to='/' />}
-					/>
+					/> */}
+					<Route path='/login' element={<Login />} />
 					<Route
 						path='/register'
 						element={!isLoggedIn ? <Register /> : <Navigate to='/' />}
 					/>
 					<Route
 						path='/settings'
-						element={isLoggedIn ? <Settings /> : <Navigate to='/login' />}
+						element={
+							isLoggedIn ? (
+								<Settings />
+							) : (
+								<Navigate to='/login' state={{ data: '/settings' }} />
+							)
+						}
 					/>
 					<Route path='*' element={<NotFound />} />
 				</Routes>

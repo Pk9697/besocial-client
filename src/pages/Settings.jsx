@@ -45,7 +45,7 @@ function Settings() {
 		})
 		// setIsAlertClosed(false)
 	}
-	console.log(formFields)
+	// console.log(formFields)
 	// console.log('inEditMode', inEditMode)
 	return (
 		<div className='login'>

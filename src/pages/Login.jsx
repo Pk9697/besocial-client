@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import { Navigate, useLocation } from 'react-router-dom'
 import { clearErrorState, login } from '../actions/auth'
 import Alert from '../components/Alert'
 function Login() {
@@ -11,6 +11,8 @@ function Login() {
 	const [isAlertClosed, setIsAlertClosed] = useState(false)
 	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
+	const location = useLocation()
+	console.log(location)
 
 	useEffect(() => {
 		return () => {
@@ -18,10 +20,15 @@ function Login() {
 		}
 	}, [])
 
-	// console.log(auth)
+	if (auth.isLoggedIn) {
+		if (location.state) {
+			return <Navigate to={location.state.data} />
+		}
+		return <Navigate to='/' />
+	}
+
 	function handleChange(e) {
 		const { name, value } = e.target
-		// console.log(name,value)
 		setFormFields((prev) => {
 			return {
 				...prev,
@@ -41,7 +48,6 @@ function Login() {
 		})
 		setIsAlertClosed(false)
 	}
-	// console.log(formFields)
 	return (
 		<div className='login'>
 			<form

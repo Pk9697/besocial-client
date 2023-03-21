@@ -2,6 +2,8 @@ import { APIUrls } from '../helpers/urls'
 import {
 	AUTHENTICATE_USER,
 	CLEAR_ERROR_STATE,
+	EDIT_USER_FAILED,
+	EDIT_USER_SUCCESSFUL,
 	LOGIN_ERROR,
 	LOGIN_START,
 	LOGIN_SUCCESS,
@@ -121,5 +123,42 @@ export function register(formFields) {
 export function clearErrorState() {
 	return {
 		type: CLEAR_ERROR_STATE,
+	}
+}
+
+export function editUserSuccessful(data) {
+	return {
+		type: EDIT_USER_SUCCESSFUL,
+		payload: data,
+	}
+}
+export function editUserFailed(errMsg) {
+	return {
+		type: EDIT_USER_FAILED,
+		payload:errMsg
+	}
+}
+
+export function editUser(formFields,bearer) {
+	return (dispatch) => {
+		const url = APIUrls.editProfile()
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${bearer}`,
+			},
+			body: JSON.stringify(formFields),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data)
+				if (data.success) {
+					localStorage.setItem('token', data.data.token)
+					dispatch(editUserSuccessful(data.data))
+				} else {
+					dispatch(editUserFailed(data.message))
+				}
+			})
 	}
 }

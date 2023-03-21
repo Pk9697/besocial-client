@@ -1,6 +1,8 @@
 import {
 	AUTHENTICATE_USER,
 	CLEAR_ERROR_STATE,
+	EDIT_USER_FAILED,
+	EDIT_USER_SUCCESSFUL,
 	LOGIN_ERROR,
 	LOGIN_START,
 	LOGIN_SUCCESS,
@@ -78,6 +80,24 @@ export const authReducer = (state = initialState, action) => {
 				token: null,
 				isLoggedIn: false,
 				error: null,
+			}
+		}
+
+		case EDIT_USER_SUCCESSFUL:{
+			return {
+				...state,
+				user:action.payload.user,
+				token:action.payload.token,
+				inProgress: false,
+				isLoggedIn: true,
+				error: false,
+			}
+		}
+
+		case EDIT_USER_FAILED:{
+			return {
+				...state,
+				error: action.payload
 			}
 		}
 

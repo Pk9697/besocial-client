@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
+import { clearErrorState, editUser } from '../actions/auth'
+import Alert from '../components/Alert'
 function Settings() {
+	const dispatch=useDispatch()
 	const auth = useSelector((state) => state.auth)
 	const { user, isLoggedIn } = auth
 	const { name, email, password } = user
+	const [isAlertClosed, setIsAlertClosed] = useState(false)
 	const [formFields, setFormFields] = useState({
 		name: '',
 		email: '',
@@ -19,6 +23,9 @@ function Settings() {
 				email,
 				password,
 			}))
+		return () => {
+			dispatch(clearErrorState())
+		}
 	}, [])
 
 	function handleChange(e) {
@@ -35,6 +42,7 @@ function Settings() {
 	function handleSubmit(e) {
 		e.preventDefault()
 		// dispatch(login(formFields))
+		dispatch(editUser({...formFields,userId:user._id},auth.token))
 		setFormFields(() => {
 			return {
 				name: '',
@@ -43,7 +51,8 @@ function Settings() {
 				confirmPassword: '',
 			}
 		})
-		// setIsAlertClosed(false)
+		setInEditMode(false)
+		setIsAlertClosed(false)
 	}
 	// console.log(formFields)
 	// console.log('inEditMode', inEditMode)
@@ -132,6 +141,13 @@ function Settings() {
 					</button>
 				)}
 			</form>
+			{auth.error && !isAlertClosed && (
+				<Alert msg={auth.error} error={true} setIsAlertClosed={setIsAlertClosed} />
+			)}
+			{auth.error==false && !isAlertClosed && (
+				<Alert msg="Successfully Updated Profile" error={false} setIsAlertClosed={setIsAlertClosed} />
+			)}
+
 		</div>
 	)
 }

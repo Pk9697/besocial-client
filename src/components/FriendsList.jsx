@@ -10,7 +10,6 @@ function FriendsList() {
 	}
 
 	const { friends } = user
-
 	return (
 		<div className='friendslist-widget widget-wrapper'>
 			<h4>Friends List</h4>

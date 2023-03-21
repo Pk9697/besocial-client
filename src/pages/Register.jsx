@@ -89,7 +89,7 @@ function Register() {
 				</button>
 			</form>
 			{auth.error && !isAlertClosed && (
-				<Alert error={auth.error} setIsAlertClosed={setIsAlertClosed} />
+				<Alert msg={auth.error} error={true} setIsAlertClosed={setIsAlertClosed} />
 			)}
 		</div>
 	)

@@ -473,6 +473,15 @@ h5 {
 	padding-bottom: 1em;
 }
 
+.alert--success{
+	background-color: #051b11;
+	color: #75b798;
+}
+.alert--error{
+	background-color: #842029;
+	color: #ea868f;
+}
+
 /* settings */
 .settings__btn{
 	width: 50%;

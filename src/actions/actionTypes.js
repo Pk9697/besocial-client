@@ -23,3 +23,9 @@ export const CLEAR_ERROR_STATE = 'CLEAR_ERROR_STATE'
 //fetch all users
 export const FETCH_ALL_USERS = 'FETCH_ALL_USERS'
 export const UPDATE_ALL_USERS = 'UPDATE_ALL_USERS'
+
+//edit user profile
+export const EDIT_USER_SUCCESSFUL='EDIT_USER_SUCCESSFUL'
+export const EDIT_USER_FAILED='EDIT_USER_FAILED'
+
+

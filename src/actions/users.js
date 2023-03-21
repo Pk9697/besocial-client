@@ -12,7 +12,7 @@ export function fetchAllUsers(bearer) {
 			},
 		})
 			.then((res) => res.json())
-			.then((data) => {
+			.then((data) => { 
 				dispatch(updateAllUsers(data.data.users))
 			})
 	}

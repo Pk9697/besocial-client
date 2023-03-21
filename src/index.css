@@ -487,3 +487,15 @@ h5 {
 	width: 50%;
 	max-width: 200px;
 }
+
+.input-file-label{
+	border: 1px dashed blue;
+	cursor: pointer;
+}
+
+#avatar{
+	/* display: inline-block; */
+	/* padding: 1em; */
+	/* margin: 1em; */
+	display: none;
+}

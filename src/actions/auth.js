@@ -139,16 +139,18 @@ export function editUserFailed(errMsg) {
 	}
 }
 
-export function editUser(formFields,bearer) {
+export function editUser(formFields,bearer,formData) {
 	return (dispatch) => {
 		const url = APIUrls.editProfile()
 		fetch(url, {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
+				// 'Content-Type': 'application/json',
+				// 'Content-Type': 'application/x-www-form-urlencoded',
 				Authorization: `Bearer ${bearer}`,
 			},
-			body: JSON.stringify(formFields),
+			// body: JSON.stringify(formFields),
+			body: formData,
 		})
 			.then((res) => res.json())
 			.then((data) => {

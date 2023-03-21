@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector,useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { clearErrorState, editUser } from '../actions/auth'
 import Alert from '../components/Alert'
+import { doesExist } from '../helpers/commonFunctions'
 function Settings() {
-	const dispatch=useDispatch()
+	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
 	const { user, isLoggedIn } = auth
 	const { name, email, password } = user
@@ -14,6 +15,7 @@ function Settings() {
 		password: '',
 		confirmPassword: '',
 	})
+	const [avatar, setAvatar] = useState(null)
 	const [inEditMode, setInEditMode] = useState(false)
 	useEffect(() => {
 		isLoggedIn &&
@@ -30,7 +32,6 @@ function Settings() {
 
 	function handleChange(e) {
 		const { name, value } = e.target
-		// console.log(name,value)
 		setFormFields((prev) => {
 			return {
 				...prev,
@@ -41,8 +42,18 @@ function Settings() {
 
 	function handleSubmit(e) {
 		e.preventDefault()
-		// dispatch(login(formFields))
-		dispatch(editUser({...formFields,userId:user._id},auth.token))
+		const formData = new FormData()
+		formData.append('email', formFields.email)
+		formData.append('name', formFields.name)
+		formData.append('password', formFields.password)
+		formData.append('confirmPassword', formFields.confirmPassword)
+		formData.append('userId', user._id)
+		if (avatar) {
+			formData.append('avatar', avatar)
+		}
+		dispatch(
+			editUser({ ...formFields, userId: user._id }, auth.token, formData)
+		)
 		setFormFields(() => {
 			return {
 				name: '',
@@ -53,29 +64,56 @@ function Settings() {
 		})
 		setInEditMode(false)
 		setIsAlertClosed(false)
+		setAvatar(null)
 	}
-	// console.log(formFields)
-	// console.log('inEditMode', inEditMode)
+	function handleImage(e) {
+		setAvatar(e.target.files[0])
+	}
+	function handleBack(e){
+		setFormFields(() => {
+			return {
+				name: '',
+				email: '',
+				password: '',
+				confirmPassword: '',
+			}
+		})
+		setInEditMode(false)
+		setIsAlertClosed(false)
+		setAvatar(null)
+	}
 	return (
 		<div className='login'>
 			<form
 				onSubmit={handleSubmit}
 				className='widget-wrapper mw-700 login-wrapper'
+				encType='multipart/form-data'
 			>
 				<img
-					src='/assets/p1.jpeg'
+					src={doesExist(user.avatar)}
 					className='user__img user__img--large'
 					alt='user_img'
 				/>
-				<h5>Update Picture</h5>
 				{!inEditMode ? (
 					<>
+						<h5>Update Picture:</h5>
 						<h5>Name: {name}</h5>
 						<h5>Email: {email}</h5>
 						<h5>Password: {password}</h5>
 					</>
 				) : (
 					<>
+						
+						<label for='avatar' className='login__input input-file-label'>
+							{avatar?avatar.name:'Choose File'}
+						</label>
+						{/* <input id='file-upload' type='file' /> */}
+						<input
+							id='avatar'
+							name='avatar'
+							type='file'
+							onChange={handleImage}
+						/>
 						<input
 							name='name'
 							value={formFields.name}
@@ -126,7 +164,7 @@ function Settings() {
 						<button
 							type='button'
 							className='login__input login__btn settings__btn'
-							onClick={() => setInEditMode(false)}
+							onClick={handleBack}
 						>
 							Go Back
 						</button>
@@ -142,12 +180,19 @@ function Settings() {
 				)}
 			</form>
 			{auth.error && !isAlertClosed && (
-				<Alert msg={auth.error} error={true} setIsAlertClosed={setIsAlertClosed} />
+				<Alert
+					msg={auth.error}
+					error={true}
+					setIsAlertClosed={setIsAlertClosed}
+				/>
 			)}
-			{auth.error==false && !isAlertClosed && (
-				<Alert msg="Successfully Updated Profile" error={false} setIsAlertClosed={setIsAlertClosed} />
+			{auth.error == false && !isAlertClosed && (
+				<Alert
+					msg='Successfully Updated Profile'
+					error={false}
+					setIsAlertClosed={setIsAlertClosed}
+				/>
 			)}
-
 		</div>
 	)
 }

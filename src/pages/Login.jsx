@@ -12,7 +12,6 @@ function Login() {
 	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
 	const location = useLocation()
-	console.log(location)
 
 	useEffect(() => {
 		return () => {

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import {Link} from 'react-router-dom'
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
@@ -18,12 +19,14 @@ function PostsList() {
 			{posts.map((post) => (
 				<div key={post._id} className='widget-wrapper'>
 					<div className='user'>
-						<img
-							className='user__img'
-							src={`http://localhost:4001${post.user.avatar}`}
-							alt='user_pic'
-						/>
-						<h5 className='user__name'>{post.user.name}</h5>
+						<Link to={`/profile/${post.user._id}`} className='user'>
+							<img
+								className='user__img'
+								src={`http://localhost:4001${post.user.avatar}`}
+								alt='user_pic'
+							/>
+							<h5 className='user__name'>{post.user.name}</h5>
+						</Link>
 						<div className='user__icon icon'>
 							<PersonAddAlt1OutlinedIcon fontSize='small' />
 						</div>

@@ -6,4 +6,5 @@ export const APIUrls = {
 	fetchPosts: () => `${API_ROOT}/posts`,
 	fetchAllUsers: () => `${API_ROOT}/users/`,
 	editProfile: () => `${API_ROOT}/users/edit`,
+	fetchUserProfile:(userId) => `${API_ROOT}/users/profile/${userId}`,
 }

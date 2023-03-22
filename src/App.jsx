@@ -14,6 +14,8 @@ import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import { authenticateUser } from './actions/auth'
 import Settings from './pages/Settings'
+import Profile from './pages/Profile'
+import PrivateRoute from './components/PrivateRoute'
 function App() {
 	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
@@ -32,10 +34,6 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path='/' element={<Home />} />
-					{/* <Route
-						path='/login'
-						element={!isLoggedIn ? <Login /> : <Navigate to='/' />}
-					/> */}
 					<Route path='/login' element={<Login />} />
 					<Route
 						path='/register'
@@ -44,13 +42,20 @@ function App() {
 					<Route
 						path='/settings'
 						element={
-							isLoggedIn ? (
+							<PrivateRoute>
 								<Settings />
-							) : (
-								<Navigate to='/login' state={{ data: '/settings' }} />
-							)
+							</PrivateRoute>
 						}
 					/>
+					<Route
+						path='/profile/:userId'
+						element={
+							<PrivateRoute>
+								<Profile />
+							</PrivateRoute>
+						}
+					/>
+
 					<Route path='*' element={<NotFound />} />
 				</Routes>
 			</div>

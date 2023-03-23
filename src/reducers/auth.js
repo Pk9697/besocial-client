@@ -83,21 +83,21 @@ export const authReducer = (state = initialState, action) => {
 			}
 		}
 
-		case EDIT_USER_SUCCESSFUL:{
+		case EDIT_USER_SUCCESSFUL: {
 			return {
 				...state,
-				user:action.payload.user,
-				token:action.payload.token,
+				user: action.payload.user,
+				token: action.payload.token,
 				inProgress: false,
 				isLoggedIn: true,
 				error: false,
 			}
 		}
 
-		case EDIT_USER_FAILED:{
+		case EDIT_USER_FAILED: {
 			return {
 				...state,
-				error: action.payload
+				error: action.payload,
 			}
 		}
 

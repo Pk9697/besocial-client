@@ -104,7 +104,7 @@ function Settings() {
 				) : (
 					<>
 						
-						<label for='avatar' className='login__input input-file-label'>
+						<label htmlFor='avatar' className='login__input input-file-label'>
 							{avatar?avatar.name:'Choose File'}
 						</label>
 						{/* <input id='file-upload' type='file' /> */}

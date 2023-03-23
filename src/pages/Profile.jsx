@@ -31,7 +31,7 @@ function Profile() {
 		<div className='widget-wrapper mw-700 login-wrapper mt-1'>
 			{inProgress ? (
 				<h3 style={{ textAlign: 'center' }}>Loading!</h3>
-			) : error ? (
+			) : error ?  (
 				!isAlertClosed && (
 					<Alert msg={error} error={true} setIsAlertClosed={setIsAlertClosed} />
 				)

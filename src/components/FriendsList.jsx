@@ -1,31 +1,51 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React,{useEffect,useState} from 'react'
+import { useSelector,useDispatch } from 'react-redux'
 import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
+import { Link } from 'react-router-dom'
 import { doesExist } from '../helpers/commonFunctions'
+import { fetchUserFriends } from '../actions/friends'
+import Alert from './Alert'
 function FriendsList() {
+	const dispatch=useDispatch()
 	const auth = useSelector((state) => state.auth)
-	const { user, isLoggedIn } = auth
+	const friends = useSelector((state) => state.friends)
+	const [isAlertClosed, setIsAlertClosed] = useState(false)
+	const { friendsArr,error } = friends
+	console.log(friends)
+	const { isLoggedIn } = auth
+	useEffect(() => {
+	  dispatch(fetchUserFriends(auth.token))
+	}, [])
+	
 	if (!isLoggedIn) {
 		return
 	}
-
-	const { friends } = user
 	return (
 		<div className='friendslist-widget widget-wrapper'>
 			<h4>Friends List</h4>
-			{friends.map((friend) => (
-				<div key={friend._id} className='user'>
-					<img
-						src={doesExist(friend.to_user.avatar)}
-						className='user__img'
-						alt='friend_pic'
-					/>
-					<h5 className='user__name'>{friend.to_user.name}</h5>
-					<div className='user__icon icon'>
-						<PersonRemoveOutlinedIcon />
-					</div>
-				</div>
-			))}
+			{error ? !isAlertClosed && <Alert msg={error} error={true} setIsAlertClosed={setIsAlertClosed} />:
+				<>
+					{friendsArr ? (
+						friendsArr.map((friend) => (
+							<div key={friend._id} className='user'>
+								<Link to={`/profile/${friend.to_user._id}`} className='user'>
+									<img
+										src={doesExist(friend.to_user.avatar)}
+										className='user__img'
+										alt='friend_pic'
+									/>
+									<h5 className='user__name'>{friend.to_user.name}</h5>
+								</Link>
+								<div className='user__icon icon'>
+									<PersonRemoveOutlinedIcon />
+								</div>
+							</div>
+						))
+					) : (
+						<h5 className='user__name'>No friends</h5>
+					)}
+				</>
+			}
 		</div>
 	)
 }

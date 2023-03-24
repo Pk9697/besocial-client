@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams,Navigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { doesExist } from '../helpers/commonFunctions'
 import { fetchUserProfile } from '../actions/profile'
@@ -9,6 +9,10 @@ function Profile() {
 	const dispatch = useDispatch()
 	const { userId } = useParams()
 	const auth = useSelector((state) => state.auth)
+	if(userId===auth.user._id){
+		console.log('Navigate to settings')
+		return <Navigate to='/settings'/>
+	}
 	const profile = useSelector((state) => state.profile)
 	const { user, inProgress, error } = profile
 	const { name, email, avatar } = user
@@ -31,7 +35,7 @@ function Profile() {
 		<div className='widget-wrapper mw-700 login-wrapper mt-1'>
 			{inProgress ? (
 				<h3 style={{ textAlign: 'center' }}>Loading!</h3>
-			) : error ?  (
+			) : error ? (
 				!isAlertClosed && (
 					<Alert msg={error} error={true} setIsAlertClosed={setIsAlertClosed} />
 				)
@@ -44,10 +48,15 @@ function Profile() {
 					/>
 					<h5>Name: {name}</h5>
 					<h5>Email: {email} </h5>
-					{isFriend()}
-					<button className='login__input login__btn settings__btn'>
-						{isFriend() ? 'Remove Friend' : 'Add Friend'}
-					</button>
+					{isFriend() ? (
+						<button className='login__input login__btn settings__btn'>
+							Remove Friend
+						</button>
+					) : (
+						<button className='login__input login__btn settings__btn'>
+							Add Friend
+						</button>
+					)}
 				</>
 			)}
 		</div>

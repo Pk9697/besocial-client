@@ -11,7 +11,6 @@ function FriendsList() {
 	const friends = useSelector((state) => state.friends)
 	const [isAlertClosed, setIsAlertClosed] = useState(false)
 	const { friendsArr,error } = friends
-	console.log(friends)
 	const { isLoggedIn } = auth
 	useEffect(() => {
 	  dispatch(fetchUserFriends(auth.token))

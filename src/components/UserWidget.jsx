@@ -12,7 +12,7 @@ function UserWidget() {
 		return
 	}
 	const { avatar, name } = user
-	const friendsCount = friendsArr ? friendsArr.length : 0
+	const friendsCount = friendsArr.length
 	return (
 		<div className='user-widget widget-wrapper'>
 			<section className='user'>

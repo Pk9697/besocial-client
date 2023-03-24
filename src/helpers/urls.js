@@ -10,5 +10,7 @@ export const APIUrls = {
 	fetchUserFriends: () => `${API_ROOT}/friendship/fetch_user_friends`,
 	addFriend: (userId) =>
 		`${API_ROOT}/friendship/create_friendship?user_id=${userId}`,
+	removeFriend: (userId) =>
+		`${API_ROOT}/friendship/remove_friendship?user_id=${userId}`,
 	authenticateUser: () => `${API_ROOT}/authenticate-user`,
 }

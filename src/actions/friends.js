@@ -5,6 +5,8 @@ import {
 	CLEAR_FRIEND_STATE,
 	FETCH_USER_FRIENDS_ERROR,
 	FETCH_USER_FRIENDS_SUCCESS,
+	REMOVE_FRIEND_ERROR,
+	REMOVE_FRIEND_SUCCESS,
 } from './actionTypes'
 
 export function fetchUserFriendsSuccess(friends) {
@@ -40,10 +42,10 @@ export function fetchUserFriends(bearer) {
 	}
 }
 
-export function addFriendSuccess(friendship) {
+export function addFriendSuccess(data) {
 	return {
 		type: ADD_FRIEND_SUCCESS,
-		payload: friendship,
+		payload: data,
 	}
 }
 export function addFriendError(errMsg) {
@@ -66,7 +68,12 @@ export function addFriend(userId, bearer) {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
-					dispatch(addFriendSuccess(data.data.friendship))
+					dispatch(
+						addFriendSuccess({
+							friendship: data.data.friendship,
+							msg: data.message,
+						})
+					)
 				} else {
 					dispatch(addFriendError(data.message))
 				}
@@ -77,5 +84,39 @@ export function addFriend(userId, bearer) {
 export function clearFriendState() {
 	return {
 		type: CLEAR_FRIEND_STATE,
+	}
+}
+
+export function removeFriendSuccess(data) {
+	return {
+		type: REMOVE_FRIEND_SUCCESS,
+		payload: data,
+	}
+}
+export function removeFriendError(errMsg) {
+	return {
+		type: REMOVE_FRIEND_ERROR,
+		payload: errMsg,
+	}
+}
+
+export function removeFriend(userId, bearer) {
+	return (dispatch) => {
+		const url = APIUrls.removeFriend(userId)
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${bearer}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.success) {
+					dispatch(removeFriendSuccess({ msg: data.message, userId }))
+				} else {
+					dispatch(removeFriendError(data.message))
+				}
+			})
 	}
 }

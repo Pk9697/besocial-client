@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { doesExist } from '../helpers/commonFunctions'
 import { fetchUserProfile } from '../actions/profile'
 import Alert from '../components/Alert'
-import { addFriend, clearFriendState } from '../actions/friends'
+import { addFriend, clearFriendState, removeFriend } from '../actions/friends'
 
 function Profile() {
 	const dispatch = useDispatch()
@@ -32,9 +32,7 @@ function Profile() {
 	}, [])
 
 	function isFriend() {
-		return Boolean(
-			friendsArr && friendsArr.find((friend) => friend.to_user._id === userId)
-		)
+		return Boolean(friendsArr.find((friend) => friend.to_user._id === userId))
 	}
 
 	return (
@@ -53,7 +51,10 @@ function Profile() {
 					<h5>Name: {name}</h5>
 					<h5>Email: {email} </h5>
 					{isFriend() ? (
-						<button className='login__input login__btn settings__btn'>
+						<button
+							className='login__input login__btn settings__btn'
+							onClick={() => dispatch(removeFriend(userId, auth.token))}
+						>
 							Remove Friend
 						</button>
 					) : (
@@ -65,7 +66,7 @@ function Profile() {
 						</button>
 					)}
 					{friendErr && <Alert msg={friendErr} error={true} />}
-					{success && <Alert msg='Friend Added' error={false} />}
+					{success && <Alert msg={success} error={false} />}
 				</>
 			)}
 		</div>

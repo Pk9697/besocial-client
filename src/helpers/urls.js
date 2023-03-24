@@ -8,5 +8,5 @@ export const APIUrls = {
 	editProfile: () => `${API_ROOT}/users/edit`,
 	fetchUserProfile:(userId) => `${API_ROOT}/users/profile/${userId}`,
 	fetchUserFriends:() => `${API_ROOT}/friendship/fetch_user_friends`,
-
+	authenticateUser:()=> `${API_ROOT}/authenticate-user`
 }

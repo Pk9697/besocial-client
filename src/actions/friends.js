@@ -28,7 +28,7 @@ export function fetchUserFriends(bearer) {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-                // console.log(data)
+                console.log(data)
 				if (data.success) {
 					dispatch(fetchUserFriendsSuccess(data.data.friends))
 				}else{

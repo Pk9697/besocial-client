@@ -21,7 +21,7 @@ function Profile() {
 	useEffect(() => {
 		if (userId) {
 			//dispatch an action
-			dispatch(fetchUserProfile(userId, auth.token))
+			dispatch(fetchUserProfile(userId, auth.token)) 
 		}
 	}, [])
 

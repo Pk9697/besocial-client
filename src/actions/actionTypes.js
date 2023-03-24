@@ -9,7 +9,8 @@ export const LOG_OUT = 'LOG_OUT'
 
 //Authenticate user
 //persist user
-export const AUTHENTICATE_USER = 'AUTHENTICATE_USER'
+export const AUTHENTICATE_USER_START = 'AUTHENTICATE_USER_START'
+export const AUTHENTICATE_USER_SUCCESS = 'AUTHENTICATE_USER_SUCCESS'
 
 //register action types
 
@@ -36,5 +37,8 @@ export const FETCH_USER_PROFILE_ERROR = 'FETCH_USER_PROFILE_ERROR'
 //fetch user friends
 export const FETCH_USER_FRIENDS_SUCCESS='FETCH_USER_FRIENDS_SUCCESS'
 export const FETCH_USER_FRIENDS_ERROR='FETCH_USER_FRIENDS_ERROR'
+
+//add/remove friend
+// export const ADD_FRIEND='ADD_FRIEND'
 
 

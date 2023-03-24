@@ -1,6 +1,7 @@
 import { APIUrls } from '../helpers/urls'
 import {
-	AUTHENTICATE_USER,
+	AUTHENTICATE_USER_START,
+	AUTHENTICATE_USER_SUCCESS,
 	CLEAR_ERROR_STATE,
 	EDIT_USER_FAILED,
 	EDIT_USER_SUCCESSFUL,
@@ -35,6 +36,9 @@ export function loginError(data) {
 	}
 }
 export function logOut() {
+	if (localStorage.getItem('token')) {
+		localStorage.removeItem('token')
+	}
 	return {
 		type: LOG_OUT,
 	}
@@ -68,10 +72,40 @@ export function login(formFields) {
 
 /* AUTHENTICATE user */
 
-export function authenticateUser(data) {
+export function authenticateUserStart() {
 	return {
-		type: AUTHENTICATE_USER,
+		type: AUTHENTICATE_USER_START,
+	}
+}
+export function authenticateUserSuccess(data) {
+	return {
+		type: AUTHENTICATE_USER_SUCCESS,
 		payload: data,
+	}
+}
+export function authenticateUserError(errMsg) {
+	return logOut()
+}
+export function authenticateUser({ user, token }) {
+	return (dispatch) => {
+		dispatch(authenticateUserStart())
+		const url = APIUrls.authenticateUser()
+		fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data)
+				if (data.success) {
+					dispatch(authenticateUserSuccess({ user, token }))
+				} else {
+					dispatch(authenticateUserError(data.message))
+				}
+			})
 	}
 }
 
@@ -135,11 +169,11 @@ export function editUserSuccessful(data) {
 export function editUserFailed(errMsg) {
 	return {
 		type: EDIT_USER_FAILED,
-		payload:errMsg
+		payload: errMsg,
 	}
 }
 
-export function editUser(formFields,bearer,formData) {
+export function editUser(formFields, bearer, formData) {
 	return (dispatch) => {
 		const url = APIUrls.editProfile()
 		fetch(url, {

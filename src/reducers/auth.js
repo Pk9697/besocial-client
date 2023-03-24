@@ -1,5 +1,6 @@
 import {
-	AUTHENTICATE_USER,
+	AUTHENTICATE_USER_START,
+	AUTHENTICATE_USER_SUCCESS,
 	CLEAR_ERROR_STATE,
 	EDIT_USER_FAILED,
 	EDIT_USER_SUCCESSFUL,
@@ -61,7 +62,16 @@ export const authReducer = (state = initialState, action) => {
 			}
 		}
 
-		case AUTHENTICATE_USER: {
+		case AUTHENTICATE_USER_START: {
+			return {
+				...state,
+				inProgress: true,
+				user: {},
+				isLoggedIn: false,
+				error: null,
+			}
+		}
+		case AUTHENTICATE_USER_SUCCESS: {
 			return {
 				...state,
 				inProgress: false,

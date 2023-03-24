@@ -12,9 +12,6 @@ function Navbar() {
 	const auth = useSelector((state) => state.auth)
 	const { user, isLoggedIn } = auth
 	function handleLogOut() {
-		if (localStorage.getItem('token')) {
-			localStorage.removeItem('token')
-		}
 		dispatch(logOut())
 	}
 

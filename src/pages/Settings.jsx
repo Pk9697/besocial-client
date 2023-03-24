@@ -8,7 +8,6 @@ function Settings() {
 	const auth = useSelector((state) => state.auth)
 	const { user, isLoggedIn } = auth
 	const { name, email, password } = user
-	const [isAlertClosed, setIsAlertClosed] = useState(false)
 	const [formFields, setFormFields] = useState({
 		name: '',
 		email: '',
@@ -69,7 +68,7 @@ function Settings() {
 	function handleImage(e) {
 		setAvatar(e.target.files[0])
 	}
-	function handleBack(e){
+	function handleBack(e) {
 		setFormFields(() => {
 			return {
 				name: '',
@@ -79,7 +78,6 @@ function Settings() {
 			}
 		})
 		setInEditMode(false)
-		setIsAlertClosed(false)
 		setAvatar(null)
 	}
 	return (
@@ -103,9 +101,8 @@ function Settings() {
 					</>
 				) : (
 					<>
-						
 						<label htmlFor='avatar' className='login__input input-file-label'>
-							{avatar?avatar.name:'Choose File'}
+							{avatar ? avatar.name : 'Choose File'}
 						</label>
 						{/* <input id='file-upload' type='file' /> */}
 						<input
@@ -179,19 +176,9 @@ function Settings() {
 					</button>
 				)}
 			</form>
-			{auth.error && !isAlertClosed && (
-				<Alert
-					msg={auth.error}
-					error={true}
-					setIsAlertClosed={setIsAlertClosed}
-				/>
-			)}
+			{auth.error && <Alert msg={auth.error} error={true} />}
 			{auth.error == false && !isAlertClosed && (
-				<Alert
-					msg='Successfully Updated Profile'
-					error={false}
-					setIsAlertClosed={setIsAlertClosed}
-				/>
+				<Alert msg='Successfully Updated Profile' error={false} />
 			)}
 		</div>
 	)

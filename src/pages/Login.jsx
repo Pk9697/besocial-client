@@ -8,7 +8,6 @@ function Login() {
 		email: '',
 		password: '',
 	})
-	const [isAlertClosed, setIsAlertClosed] = useState(false)
 	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
 	const location = useLocation()
@@ -45,7 +44,6 @@ function Login() {
 				password: '',
 			}
 		})
-		setIsAlertClosed(false)
 	}
 	return (
 		<div className='login'>
@@ -79,9 +77,7 @@ function Login() {
 					{auth.inProgress ? 'LOGGING IN' : 'LOG IN'}
 				</button>
 			</form>
-			{auth.error && !isAlertClosed && (
-				<Alert msg={auth.error} error={true} setIsAlertClosed={setIsAlertClosed} />
-			)}
+			{auth.error && <Alert msg={auth.error} error={true} />}
 		</div>
 	)
 }

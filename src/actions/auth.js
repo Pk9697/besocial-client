@@ -57,7 +57,6 @@ export function login(formFields) {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data)
 				if (data.success) {
 					//for persisting user when auth is lost when reloading
 					localStorage.setItem('token', data.data.token)
@@ -99,7 +98,6 @@ export function authenticateUser({ user, token }) {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data)
 				if (data.success) {
 					dispatch(authenticateUserSuccess({ user, token }))
 				} else {
@@ -144,8 +142,8 @@ export function register(formFields) {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				// console.log(data)
 				if (data.success) {
+					localStorage.setItem('token', data.data.token)
 					dispatch(registerSuccess(data.data))
 				} else {
 					dispatch(registerError(data.message))

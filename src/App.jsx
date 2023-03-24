@@ -16,15 +16,21 @@ import { authenticateUser } from './actions/auth'
 import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
+import { fetchUserFriends } from './actions/friends'
+import { fetchPosts } from './actions/posts'
+import { fetchAllUsers } from './actions/users'
 function App() {
 	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
 	const { isLoggedIn } = auth
 	useEffect(() => {
+		dispatch(fetchPosts())
 		const token = localStorage.getItem('token')
 		if (token) {
 			const user = jwt_decode(token)
 			dispatch(authenticateUser({ user, token }))
+			dispatch(fetchUserFriends(token))
+			dispatch(fetchAllUsers(token))
 		}
 	}, [])
 

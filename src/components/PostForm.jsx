@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined'
-import { BASE_ROOT } from '../helpers/urls'
+import { doesExist } from '../helpers/commonFunctions'
 function PostForm() {
 	const auth = useSelector((state) => state.auth)
 	const { user, isLoggedIn } = auth
@@ -13,11 +13,7 @@ function PostForm() {
 	return (
 		<div className='postform-widget widget-wrapper'>
 			<section className='post-form__section1'>
-				<img
-					className='user__img'
-					src={`${BASE_ROOT}${avatar}`}
-					alt='user_img'
-				/>
+				<img className='user__img' src={doesExist(avatar)} alt='user_img' />
 				<input
 					className='input post-form__input'
 					type='text'

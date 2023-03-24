@@ -1,33 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { useParams,Navigate } from 'react-router-dom'
+import { useParams, Navigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { doesExist } from '../helpers/commonFunctions'
 import { fetchUserProfile } from '../actions/profile'
 import Alert from '../components/Alert'
+import { addFriend, clearFriendState } from '../actions/friends'
 
 function Profile() {
 	const dispatch = useDispatch()
 	const { userId } = useParams()
 	const auth = useSelector((state) => state.auth)
-	if(userId===auth.user._id){
+	if (userId === auth.user._id) {
 		console.log('Navigate to settings')
-		return <Navigate to='/settings'/>
+		return <Navigate to='/settings' />
 	}
 	const profile = useSelector((state) => state.profile)
 	const { user, inProgress, error } = profile
 	const { name, email, avatar } = user
-	const [isAlertClosed, setIsAlertClosed] = useState(false)
+	const friends = useSelector((state) => state.friends)
+	const { friendsArr, error: friendErr, success } = friends
 
 	useEffect(() => {
 		if (userId) {
 			//dispatch an action
-			dispatch(fetchUserProfile(userId, auth.token)) 
+			dispatch(fetchUserProfile(userId, auth.token))
+		}
+
+		return () => {
+			dispatch(clearFriendState())
 		}
 	}, [])
 
 	function isFriend() {
 		return Boolean(
-			auth.user.friends.find((friend) => friend.to_user._id === userId)
+			friendsArr && friendsArr.find((friend) => friend.to_user._id === userId)
 		)
 	}
 
@@ -36,9 +42,7 @@ function Profile() {
 			{inProgress ? (
 				<h3 style={{ textAlign: 'center' }}>Loading!</h3>
 			) : error ? (
-				!isAlertClosed && (
-					<Alert msg={error} error={true} setIsAlertClosed={setIsAlertClosed} />
-				)
+				<Alert msg={error} error={true} />
 			) : (
 				<>
 					<img
@@ -53,10 +57,15 @@ function Profile() {
 							Remove Friend
 						</button>
 					) : (
-						<button className='login__input login__btn settings__btn'>
+						<button
+							className='login__input login__btn settings__btn'
+							onClick={() => dispatch(addFriend(userId, auth.token))}
+						>
 							Add Friend
 						</button>
 					)}
+					{friendErr && <Alert msg={friendErr} error={true} />}
+					{success && <Alert msg='Friend Added' error={false} />}
 				</>
 			)}
 		</div>

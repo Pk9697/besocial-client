@@ -6,7 +6,9 @@ export const APIUrls = {
 	fetchPosts: () => `${API_ROOT}/posts`,
 	fetchAllUsers: () => `${API_ROOT}/users/`,
 	editProfile: () => `${API_ROOT}/users/edit`,
-	fetchUserProfile:(userId) => `${API_ROOT}/users/profile/${userId}`,
-	fetchUserFriends:() => `${API_ROOT}/friendship/fetch_user_friends`,
-	authenticateUser:()=> `${API_ROOT}/authenticate-user`
+	fetchUserProfile: (userId) => `${API_ROOT}/users/profile/${userId}`,
+	fetchUserFriends: () => `${API_ROOT}/friendship/fetch_user_friends`,
+	addFriend: (userId) =>
+		`${API_ROOT}/friendship/create_friendship?user_id=${userId}`,
+	authenticateUser: () => `${API_ROOT}/authenticate-user`,
 }

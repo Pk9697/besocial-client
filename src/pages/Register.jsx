@@ -9,7 +9,6 @@ function Register() {
 		password: '',
 		confirm_password: '',
 	})
-	const [isAlertClosed, setIsAlertClosed] = useState(false)
 	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
 	const { name, email, password, confirm_password } = formFields
@@ -39,7 +38,6 @@ function Register() {
 			password: '',
 			confirm_password: '',
 		})
-		setIsAlertClosed(false)
 	}
 
 	return (
@@ -88,9 +86,7 @@ function Register() {
 					REGISTER
 				</button>
 			</form>
-			{auth.error && !isAlertClosed && (
-				<Alert msg={auth.error} error={true} setIsAlertClosed={setIsAlertClosed} />
-			)}
+			{auth.error && <Alert msg={auth.error} error={true} />}
 		</div>
 	)
 }

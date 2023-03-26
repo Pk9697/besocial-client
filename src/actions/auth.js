@@ -77,6 +77,7 @@ export function authenticateUserStart() {
 	}
 }
 export function authenticateUserSuccess(data) {
+	localStorage.setItem('token', data.token)
 	return {
 		type: AUTHENTICATE_USER_SUCCESS,
 		payload: data,
@@ -99,6 +100,7 @@ export function authenticateUser({ user, token }) {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
+					// localStorage.setItem('token', token)
 					dispatch(authenticateUserSuccess({ user, token }))
 				} else {
 					dispatch(authenticateUserError(data.message))

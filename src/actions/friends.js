@@ -8,6 +8,7 @@ import {
 	REMOVE_FRIEND_ERROR,
 	REMOVE_FRIEND_SUCCESS,
 } from './actionTypes'
+import { authenticateUserSuccess } from './auth'
 
 export function fetchUserFriendsSuccess(friends) {
 	return {
@@ -68,10 +69,17 @@ export function addFriend(userId, bearer) {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
+					console.log(data)
 					dispatch(
 						addFriendSuccess({
 							friendship: data.data.friendship,
 							msg: data.message,
+						})
+					)
+					dispatch(
+						authenticateUserSuccess({
+							user: data.data.loggedInUser,
+							token: data.data.token,
 						})
 					)
 				} else {
@@ -112,8 +120,15 @@ export function removeFriend(userId, bearer) {
 		})
 			.then((res) => res.json())
 			.then((data) => {
+				console.log(data)
 				if (data.success) {
 					dispatch(removeFriendSuccess({ msg: data.message, userId }))
+					dispatch(
+						authenticateUserSuccess({
+							user: data.data.loggedInUser,
+							token: data.data.token,
+						})
+					)
 				} else {
 					dispatch(removeFriendError(data.message))
 				}

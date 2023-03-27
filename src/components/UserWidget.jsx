@@ -24,7 +24,7 @@ function UserWidget() {
 					</p>
 				</div>
 				<Link to='/settings' className='user__icon icon'>
-					<ManageAccountsOutlinedIcon />
+					<ManageAccountsOutlinedIcon fontSize='small'/>
 				</Link>
 			</section>
 		</div>

@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
 import { Link } from 'react-router-dom'
 import { doesExist } from '../helpers/commonFunctions'
-import { clearFriendState, fetchUserFriends } from '../actions/friends'
+import {
+	clearFriendState,
+	fetchUserFriends,
+	removeFriend,
+} from '../actions/friends'
 import Alert from './Alert'
 function FriendsList() {
 	const dispatch = useDispatch()
@@ -39,8 +43,13 @@ function FriendsList() {
 									/>
 									<h5 className='user__name'>{friend.to_user.name}</h5>
 								</Link>
-								<div className='user__icon icon'>
-									<PersonRemoveOutlinedIcon />
+								<div
+									className='user__icon icon'
+									onClick={() =>
+										dispatch(removeFriend(friend.to_user._id, auth.token))
+									}
+								>
+									<PersonRemoveOutlinedIcon fontSize='small'/>
 								</div>
 							</div>
 						))

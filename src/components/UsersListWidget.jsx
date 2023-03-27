@@ -1,16 +1,29 @@
 import React, { useEffect } from 'react'
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined'
+import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
 import { useSelector, useDispatch } from 'react-redux'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { fetchAllUsers } from '../actions/users'
 import { doesExist } from '../helpers/commonFunctions'
+import { addFriend, removeFriend } from '../actions/friends'
+import Alert from './Alert'
 function UsersListWidget() {
 	const dispatch = useDispatch()
 	const users = useSelector((state) => state.users)
 	const auth = useSelector((state) => state.auth)
+	const friends = useSelector((state) => state.friends)
+	const { friendsArr, error: friendErr, success } = friends
 	useEffect(() => {
 		dispatch(fetchAllUsers(auth.token))
 	}, [])
+
+	function isFriend(userId) {
+		return Boolean(friendsArr.find((friend) => friend.to_user._id === userId))
+	}
+
+	function isLoggedInUser(userId) {
+		return userId === auth.user._id
+	}
 
 	return (
 		<div className='userslist-widget widget-wrapper'>
@@ -25,11 +38,29 @@ function UsersListWidget() {
 						/>
 						<h5 className='user__name'>{user.name}</h5>
 					</Link>
-					<div className='user__icon icon'>
-						<PersonAddAlt1OutlinedIcon />
-					</div>
+					{!isLoggedInUser(user._id) ? (
+						isFriend(user._id) ? (
+							<div
+								className='user__icon icon'
+								onClick={() => dispatch(removeFriend(user._id, auth.token))}
+							>
+								<PersonRemoveOutlinedIcon fontSize='small'/>
+							</div>
+						) : (
+							<div
+								className='user__icon icon'
+								onClick={() => dispatch(addFriend(user._id, auth.token))}
+							>
+								<PersonAddAlt1OutlinedIcon fontSize='small'/>
+							</div>
+						)
+					) : (
+						<></>
+					)}
 				</div>
 			))}
+			{friendErr && <Alert msg={friendErr} error={true} />}
+			{success && <Alert msg={success} error={false} />}
 		</div>
 	)
 }

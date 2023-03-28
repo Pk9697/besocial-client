@@ -6,6 +6,7 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logOut } from '../actions/auth'
+import { notify } from '../helpers/commonFunctions'
 function Navbar() {
 	const [isMenuClicked, setIsMenuClicked] = useState(false)
 	const dispatch = useDispatch()
@@ -13,6 +14,7 @@ function Navbar() {
 	const { user, isLoggedIn } = auth
 	function handleLogOut() {
 		dispatch(logOut())
+		notify({ type: 'success', msg: 'Logged Out!' })
 	}
 
 	return (

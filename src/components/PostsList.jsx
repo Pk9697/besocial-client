@@ -43,14 +43,16 @@ function PostsList() {
 							isFriend(post.user._id) ? (
 								<div
 									className='user__icon icon'
-									onClick={() => dispatch(removeFriend(user._id, auth.token))}
+									onClick={() =>
+										dispatch(removeFriend(post.user._id, auth.token))
+									}
 								>
 									<PersonRemoveOutlinedIcon fontSize='small' />
 								</div>
 							) : (
 								<div
 									className='user__icon icon'
-									onClick={() => dispatch(addFriend(user._id, auth.token))}
+									onClick={() => dispatch(addFriend(post.user._id, auth.token))}
 								>
 									<PersonAddAlt1OutlinedIcon fontSize='small' />
 								</div>

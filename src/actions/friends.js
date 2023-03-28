@@ -1,3 +1,4 @@
+import { notify } from '../helpers/commonFunctions'
 import { APIUrls } from '../helpers/urls'
 import {
 	ADD_FRIEND_ERROR,
@@ -38,6 +39,7 @@ export function fetchUserFriends(bearer) {
 					dispatch(fetchUserFriendsSuccess(data.data.friends))
 				} else {
 					dispatch(fetchUserFriendsError(data.message))
+					notify({ type: 'error', msg: data.message })
 				}
 			})
 	}
@@ -69,7 +71,6 @@ export function addFriend(userId, bearer) {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
-					console.log(data)
 					dispatch(
 						addFriendSuccess({
 							friendship: data.data.friendship,
@@ -82,8 +83,10 @@ export function addFriend(userId, bearer) {
 							token: data.data.token,
 						})
 					)
+					notify({ type: 'success', msg: data.message })
 				} else {
 					dispatch(addFriendError(data.message))
+					notify({ type: 'error', msg: data.message })
 				}
 			})
 	}
@@ -129,8 +132,10 @@ export function removeFriend(userId, bearer) {
 							token: data.data.token,
 						})
 					)
+					notify({ type: 'success', msg: data.message })
 				} else {
 					dispatch(removeFriendError(data.message))
+					notify({ type: 'error', msg: data.message })
 				}
 			})
 	}

@@ -18,7 +18,7 @@ function Profile() {
 	const { user, inProgress, error } = profile
 	const { name, email, avatar } = user
 	const friends = useSelector((state) => state.friends)
-	const { friendsArr, error: friendErr, success } = friends
+	const { friendsArr } = friends
 
 	useEffect(() => {
 		if (userId) {
@@ -65,8 +65,6 @@ function Profile() {
 							Add Friend
 						</button>
 					)}
-					{friendErr && <Alert msg={friendErr} error={true} />}
-					{success && <Alert msg={success} error={false} />}
 				</>
 			)}
 		</div>

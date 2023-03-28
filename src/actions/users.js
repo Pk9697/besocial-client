@@ -1,3 +1,4 @@
+import { notify } from '../helpers/commonFunctions'
 import { APIUrls } from '../helpers/urls'
 import { FETCH_ALL_USERS, UPDATE_ALL_USERS } from './actionTypes'
 
@@ -12,8 +13,12 @@ export function fetchAllUsers(bearer) {
 			},
 		})
 			.then((res) => res.json())
-			.then((data) => { 
-				dispatch(updateAllUsers(data.data.users))
+			.then((data) => {
+				if (data.success) {
+					dispatch(updateAllUsers(data.data.users))
+				} else {
+					notify({ type: 'error', msg: data.message })
+				}
 			})
 	}
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, useLocation } from 'react-router-dom'
 import { clearErrorState, login } from '../actions/auth'
-import Alert from '../components/Alert'
 function Login() {
 	const [formFields, setFormFields] = useState({
 		email: '',
@@ -77,7 +76,6 @@ function Login() {
 					{auth.inProgress ? 'LOGGING IN' : 'LOG IN'}
 				</button>
 			</form>
-			{auth.error && <Alert msg={auth.error} error={true} />}
 		</div>
 	)
 }

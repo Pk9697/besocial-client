@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { clearErrorState, editUser } from '../actions/auth'
-import Alert from '../components/Alert'
 import { doesExist } from '../helpers/commonFunctions'
 function Settings() {
 	const dispatch = useDispatch()
@@ -62,7 +61,6 @@ function Settings() {
 			}
 		})
 		setInEditMode(false)
-		setIsAlertClosed(false)
 		setAvatar(null)
 	}
 	function handleImage(e) {
@@ -176,10 +174,6 @@ function Settings() {
 					</button>
 				)}
 			</form>
-			{auth.error && <Alert msg={auth.error} error={true} />}
-			{auth.error == false && !isAlertClosed && (
-				<Alert msg='Successfully Updated Profile' error={false} />
-			)}
 		</div>
 	)
 }

@@ -7,6 +7,8 @@ import {
 } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import { useDispatch, useSelector } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
@@ -64,6 +66,7 @@ function App() {
 
 					<Route path='*' element={<NotFound />} />
 				</Routes>
+				<ToastContainer />
 			</div>
 		</Router>
 	)

@@ -1,3 +1,4 @@
+import { notify } from '../helpers/commonFunctions'
 import { APIUrls } from '../helpers/urls'
 import {
 	AUTHENTICATE_USER_START,
@@ -62,8 +63,10 @@ export function login(formFields) {
 					localStorage.setItem('token', data.data.token)
 					// console.log(localStorage.getItem('token'))
 					dispatch(loginSuccess(data.data))
+					notify({ type: 'success', msg: 'Logged In!' })
 				} else {
 					dispatch(loginError(data.message))
+					notify({ type: 'error', msg: data.message })
 				}
 			})
 	}
@@ -147,8 +150,10 @@ export function register(formFields) {
 				if (data.success) {
 					localStorage.setItem('token', data.data.token)
 					dispatch(registerSuccess(data.data))
+					notify({ type: 'success', msg: 'Registered!' })
 				} else {
 					dispatch(registerError(data.message))
+					notify({ type: 'error', msg: data.message })
 				}
 			})
 	}
@@ -192,8 +197,10 @@ export function editUser(formFields, bearer, formData) {
 				if (data.success) {
 					localStorage.setItem('token', data.data.token)
 					dispatch(editUserSuccessful(data.data))
+					notify({ type: 'success', msg: 'Updated Successfully!' })
 				} else {
 					dispatch(editUserFailed(data.message))
+					notify({ type: 'error', msg: data.message })
 				}
 			})
 	}

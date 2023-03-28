@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined'
 import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
 import { useSelector, useDispatch } from 'react-redux'
@@ -6,13 +6,12 @@ import { Link } from 'react-router-dom'
 import { fetchAllUsers } from '../actions/users'
 import { doesExist } from '../helpers/commonFunctions'
 import { addFriend, removeFriend } from '../actions/friends'
-import Alert from './Alert'
 function UsersListWidget() {
 	const dispatch = useDispatch()
 	const users = useSelector((state) => state.users)
 	const auth = useSelector((state) => state.auth)
 	const friends = useSelector((state) => state.friends)
-	const { friendsArr, error: friendErr, success } = friends
+	const { friendsArr } = friends
 	useEffect(() => {
 		dispatch(fetchAllUsers(auth.token))
 	}, [])
@@ -44,14 +43,14 @@ function UsersListWidget() {
 								className='user__icon icon'
 								onClick={() => dispatch(removeFriend(user._id, auth.token))}
 							>
-								<PersonRemoveOutlinedIcon fontSize='small'/>
+								<PersonRemoveOutlinedIcon fontSize='small' />
 							</div>
 						) : (
 							<div
 								className='user__icon icon'
 								onClick={() => dispatch(addFriend(user._id, auth.token))}
 							>
-								<PersonAddAlt1OutlinedIcon fontSize='small'/>
+								<PersonAddAlt1OutlinedIcon fontSize='small' />
 							</div>
 						)
 					) : (
@@ -59,8 +58,6 @@ function UsersListWidget() {
 					)}
 				</div>
 			))}
-			{friendErr && <Alert msg={friendErr} error={true} />}
-			{success && <Alert msg={success} error={false} />}
 		</div>
 	)
 }

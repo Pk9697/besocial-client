@@ -68,9 +68,10 @@ function Post(props) {
 					<p>{post.comments.length}</p>
 				</div>
 			</div>
-			<hr style={{ width: '100%' }} />
+			{(post.comments.length>0 || auth.isLoggedIn) && 
+			<hr style={{ width: '100%' }} />}
 
-			<CommentsList />
+			<CommentsList comments={post.comments} postId={post._id}/>
 		</div>
 	)
 }

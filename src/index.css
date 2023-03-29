@@ -469,9 +469,15 @@ h6 {
 }
 
 .login__btn:disabled,
-.post-btn:disabled {
+.post-btn:disabled,
+.comment-btn:disabled
+{
 	cursor: not-allowed;
 	/* background-color: rgb(246, 91, 91); */
+}
+
+.comment-btn:disabled{
+	opacity: 0.5;
 }
 
 /* .disabled{
@@ -557,4 +563,5 @@ h6 {
 .comment-btn {
 	font-size: var(--fs-h6);
 	padding: 0.5em 0.75em;
+	border: none;
 }

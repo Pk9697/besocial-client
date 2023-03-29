@@ -48,3 +48,5 @@ export const CLEAR_FRIEND_STATE = 'CLEAR_FRIEND_STATE'
 
 //add post
 export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
+//add comment
+export const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCCESS'

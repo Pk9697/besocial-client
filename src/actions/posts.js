@@ -4,6 +4,7 @@ import {
 	UPDATE_POSTS,
 	FETCH_POSTS_ERROR,
 	CREATE_POST_SUCCESS,
+	CREATE_COMMENT_SUCCESS,
 } from './actionTypes'
 
 export function fetchPosts() {
@@ -54,6 +55,36 @@ export function createPost(formFields, bearer) {
 				console.log(data)
 				if (data.success) {
 					dispatch(createPostSuccess(data.data.post))
+					notify({ type: 'success', msg: data.message })
+				} else {
+					notify({ type: 'error', msg: data.message })
+				}
+			})
+	}
+}
+export function createCommentSuccess(data) {
+	return {
+		type: CREATE_COMMENT_SUCCESS,
+		payload: data,
+	}
+}
+
+export function createComment(formFields, bearer) {
+	return (dispatch) => {
+		const url = APIUrls.createComment()
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${bearer}`,
+			},
+			body: JSON.stringify(formFields),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data)
+				if (data.success) {
+					dispatch(createCommentSuccess({comment:data.data.comment,postId:formFields.postId}))
 					notify({ type: 'success', msg: data.message })
 				} else {
 					notify({ type: 'error', msg: data.message })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined'
 import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
 import { useSelector, useDispatch } from 'react-redux'
@@ -40,14 +40,14 @@ function UsersListWidget() {
 					{!isLoggedInUser(user._id) ? (
 						isFriend(user._id) ? (
 							<div
-								className='user__icon icon'
+								className='user__icon icon ml-auto'
 								onClick={() => dispatch(removeFriend(user._id, auth.token))}
 							>
 								<PersonRemoveOutlinedIcon fontSize='small' />
 							</div>
 						) : (
 							<div
-								className='user__icon icon'
+								className='user__icon icon ml-auto'
 								onClick={() => dispatch(addFriend(user._id, auth.token))}
 							>
 								<PersonAddAlt1OutlinedIcon fontSize='small' />

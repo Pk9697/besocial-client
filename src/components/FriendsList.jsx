@@ -40,7 +40,7 @@ function FriendsList() {
 							<h5 className='user__name'>{friend.to_user.name}</h5>
 						</Link>
 						<div
-							className='user__icon icon'
+							className='user__icon icon ml-auto'
 							onClick={() =>
 								dispatch(removeFriend(friend.to_user._id, auth.token))
 							}

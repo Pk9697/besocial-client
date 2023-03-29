@@ -28,6 +28,7 @@
 	--fs-h3: 1.75rem;
 	--fs-h4: 1.25rem;
 	--fs-h5: 0.8rem;
+	--fs-h6: 0.6rem;
 	--fs-body: 0.8rem;
 
 	/* box shadow:horizontal vertical blur color,2nd bs applying a layer of bs on top of 1st */
@@ -37,6 +38,7 @@
 	/* border-radius */
 	--br: 10px;
 	--br2: 5px;
+	--br3: 15px;
 	/* padding */
 	--pad: 1.5em;
 }
@@ -48,6 +50,7 @@
 		--fs-h3: 2.25rem;
 		--fs-h4: 1.5rem;
 		--fs-h5: 1rem;
+		--fs-h6: 0.8rem;
 		--fs-body: 1rem;
 	}
 }
@@ -84,6 +87,7 @@ h2,
 h3,
 h4,
 h5,
+h6,
 p {
 	margin: 0;
 	line-height: 1.3;
@@ -103,6 +107,9 @@ h4 {
 }
 h5 {
 	font-size: var(--fs-h5);
+}
+h6 {
+	font-size: var(--fs-h6);
 }
 
 .flex-col {
@@ -231,7 +238,6 @@ h5 {
 }
 
 .user__icon {
-	margin-left: auto;
 	color: var(--clr-accent);
 	background-color: var(--clr-accent-background);
 }
@@ -257,6 +263,8 @@ h5 {
 .post__content {
 	font-weight: 400;
 	line-height: 1.5;
+	overflow-wrap: break-word;
+	hyphens: manual;
 }
 .post__interactions {
 	display: flex;
@@ -424,8 +432,12 @@ h5 {
 	width: 90%;
 }
 
-.mt-1{
-	margin-top:1.5em;
+.mt-1 {
+	margin-top: 1.5em;
+}
+
+.mb-1 {
+	margin-bottom: 1em;
 }
 
 .login-wrapper {
@@ -456,7 +468,8 @@ h5 {
 	color: var(--clr-accent);
 }
 
-.login__btn:disabled,.post-btn:disabled {
+.login__btn:disabled,
+.post-btn:disabled {
 	cursor: not-allowed;
 	/* background-color: rgb(246, 91, 91); */
 }
@@ -479,29 +492,69 @@ h5 {
 	min-width: auto;
 }
 
-.alert--success{
+.alert--success {
 	background-color: #051b11;
 	color: #75b798;
 }
-.alert--error{
+.alert--error {
 	background-color: #842029;
 	color: #ea868f;
 }
 
 /* settings */
-.settings__btn{
+.settings__btn {
 	width: 50%;
 	max-width: 200px;
 }
 
-.input-file-label{
+.input-file-label {
 	border: 1px dashed blue;
 	cursor: pointer;
 }
 
-#avatar{
+#avatar {
 	/* display: inline-block; */
 	/* padding: 1em; */
 	/* margin: 1em; */
 	display: none;
+}
+
+/* Comment */
+
+.comment__img {
+	width: 40px;
+	height: 40px;
+}
+
+.comment__content {
+	padding: 0.5em 0.75em;
+	background-color: var(--clr-background);
+	border-radius: var(--br3);
+}
+
+.gap-1 {
+	gap: 1em;
+}
+.gap-1by10 {
+	gap: 0.1em;
+}
+
+.ml-auto {
+	margin-left: auto;
+}
+
+.comment-form {
+	display: flex;
+	align-items: center;
+	gap: 1em;
+}
+
+.comment-form__img {
+	width: 50px;
+	height: 50px;
+}
+
+.comment-btn {
+	font-size: var(--fs-h6);
+	padding: 0.5em 0.75em;
 }

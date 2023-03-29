@@ -6,6 +6,7 @@ import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
 import { addFriend, removeFriend } from '../actions/friends'
+import CommentsList from './CommentsList'
 
 function Post(props) {
 	const auth = useSelector((state) => state.auth)
@@ -35,14 +36,14 @@ function Post(props) {
 				{!isLoggedInUser(post.user._id) ? (
 					isFriend(post.user._id) ? (
 						<div
-							className='user__icon icon'
+							className='user__icon icon ml-auto'
 							onClick={() => dispatch(removeFriend(post.user._id, auth.token))}
 						>
 							<PersonRemoveOutlinedIcon fontSize='small' />
 						</div>
 					) : (
 						<div
-							className='user__icon icon'
+							className='user__icon icon ml-auto'
 							onClick={() => dispatch(addFriend(post.user._id, auth.token))}
 						>
 							<PersonAddAlt1OutlinedIcon fontSize='small' />
@@ -67,6 +68,9 @@ function Post(props) {
 					<p>{post.comments.length}</p>
 				</div>
 			</div>
+			<hr style={{ width: '100%' }} />
+
+			<CommentsList />
 		</div>
 	)
 }

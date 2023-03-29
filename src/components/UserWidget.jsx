@@ -23,8 +23,8 @@ function UserWidget() {
 						{friendsCount} friend{friendsCount > 1 ? 's' : ''}
 					</p>
 				</div>
-				<Link to='/settings' className='user__icon icon'>
-					<ManageAccountsOutlinedIcon fontSize='small'/>
+				<Link to='/settings' className='user__icon icon ml-auto'>
+					<ManageAccountsOutlinedIcon fontSize='small' />
 				</Link>
 			</section>
 		</div>

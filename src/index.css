@@ -456,7 +456,7 @@ h5 {
 	color: var(--clr-accent);
 }
 
-.login__btn:disabled {
+.login__btn:disabled,.post-btn:disabled {
 	cursor: not-allowed;
 	/* background-color: rgb(246, 91, 91); */
 }

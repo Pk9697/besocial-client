@@ -4,13 +4,17 @@ import { useSelector } from 'react-redux'
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined'
 import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
 import { addFriend, removeFriend } from '../actions/friends'
 import CommentsList from './CommentsList'
+import { toggleLike } from '../actions/posts'
+import { notify } from '../helpers/commonFunctions'
 
 function Post(props) {
 	const auth = useSelector((state) => state.auth)
 	const friends = useSelector((state) => state.friends)
+	const { isLoggedIn } = auth
 	const { friendsArr } = friends
 	const { post, dispatch } = props
 
@@ -22,6 +26,17 @@ function Post(props) {
 		return userId === auth.user._id
 	}
 
+	function isPostAlreadyLiked() {
+		return Boolean(post.likes.find((like) => like.user._id === auth.user._id))
+	}
+
+	function handlePostLike() {
+		if (isLoggedIn) {
+			dispatch(toggleLike(post._id, 'Post', auth.token))
+		} else {
+			notify({ type: 'error', msg: 'Please Log In to Like' })
+		}
+	}
 	return (
 		<div className='widget-wrapper'>
 			<div className='user'>
@@ -33,7 +48,8 @@ function Post(props) {
 					/>
 					<h5 className='user__name'>{post.user.name}</h5>
 				</Link>
-				{!isLoggedInUser(post.user._id) ? (
+
+				{isLoggedIn && !isLoggedInUser(post.user._id) ? (
 					isFriend(post.user._id) ? (
 						<div
 							className='user__icon icon ml-auto'
@@ -56,9 +72,15 @@ function Post(props) {
 			<p className='post__content'>{post.content}</p>
 			<div className='post__interactions'>
 				<div className='post__likes'>
-					<div className='icon'>
-						<FavoriteBorderOutlinedIcon />
-					</div>
+					{isPostAlreadyLiked() ? (
+						<div className='icon' onClick={handlePostLike}>
+							<FavoriteIcon color='error' />
+						</div>
+					) : (
+						<div className='icon' onClick={handlePostLike}>
+							<FavoriteBorderOutlinedIcon />
+						</div>
+					)}
 					<p>{post.likes.length}</p>
 				</div>
 				<div className='post__comments'>
@@ -68,10 +90,11 @@ function Post(props) {
 					<p>{post.comments.length}</p>
 				</div>
 			</div>
-			{(post.comments.length>0 || auth.isLoggedIn) && 
-			<hr style={{ width: '100%' }} />}
+			{(post.comments.length > 0 || isLoggedIn) && (
+				<hr style={{ width: '100%' }} />
+			)}
 
-			<CommentsList comments={post.comments} postId={post._id}/>
+			<CommentsList comments={post.comments} postId={post._id} />
 		</div>
 	)
 }

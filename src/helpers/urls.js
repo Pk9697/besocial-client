@@ -15,4 +15,5 @@ export const APIUrls = {
 	authenticateUser: () => `${API_ROOT}/authenticate-user`,
 	createPost: () => `${API_ROOT}/posts/create`,
 	createComment: () => `${API_ROOT}/comments/create`,
+	toggleLike: (id, type) => `${API_ROOT}/likes/toggle/?id=${id}&type=${type}`,
 }

@@ -6,6 +6,7 @@ import {
 	CREATE_POST_SUCCESS,
 	CREATE_COMMENT_SUCCESS,
 	TOGGLE_POST_LIKE_SUCCESS,
+	TOGGLE_COMMENT_LIKE_SUCCESS,
 } from './actionTypes'
 
 export function fetchPosts() {
@@ -105,10 +106,21 @@ export function togglePostLikeSuccess(data) {
 		payload: data,
 	}
 }
+export function toggleCommentLikeSuccess(data) {
+	return {
+		type: TOGGLE_COMMENT_LIKE_SUCCESS,
+		payload: data,
+	}
+}
 
-export function toggleLike(id, type, bearer) {
+export function toggleLike({ postId, commentId, type, bearer }) {
 	return (dispatch) => {
-		const url = APIUrls.toggleLike(id, type)
+		let url
+		if (type === 'Post') {
+			url = APIUrls.toggleLike(postId, type)
+		} else if (type === 'Comment') {
+			url = APIUrls.toggleLike(commentId, type)
+		}
 		fetch(url, {
 			method: 'POST',
 			headers: {
@@ -126,7 +138,11 @@ export function toggleLike(id, type, bearer) {
 						notify({ type: 'success', msg: `${type} Liked ` })
 					}
 					if (type === 'Post') {
-						dispatch(togglePostLikeSuccess({ ...data.data, postId: id }))
+						dispatch(togglePostLikeSuccess({ ...data.data, postId }))
+					} else if (type === 'Comment') {
+						dispatch(
+							toggleCommentLikeSuccess({ ...data.data, postId, commentId })
+						)
 					}
 				} else {
 					notify({ type: 'error', msg: data.message })

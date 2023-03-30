@@ -1,9 +1,38 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import { doesExist } from '../helpers/commonFunctions'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+
+import { doesExist, notify } from '../helpers/commonFunctions'
+import { toggleLike } from '../actions/posts'
 
 function Comment(props) {
-    const {comment}=props
+	const dispatch = useDispatch()
+	const auth = useSelector((state) => state.auth)
+	const { isLoggedIn } = auth
+	const { comment } = props
+
+	function isCommentAlreadyLiked() {
+		return Boolean(
+			comment.likes.find((like) => like.user._id === auth.user._id)
+		)
+	}
+
+	function handleCommentLike() {
+		if (isLoggedIn) {
+			dispatch(
+				toggleLike({
+					postId: props.postId,
+					commentId: comment._id,
+					type: 'Comment',
+					bearer: auth.token,
+				})
+			)
+		} else {
+			notify({ type: 'error', msg: 'Please Log In to Like' })
+		}
+	}
+
 	return (
 		<div className='user'>
 			<img
@@ -16,10 +45,16 @@ function Comment(props) {
 				<p className='post__content'>{comment.content}</p>
 			</div>
 			<div className='post__likes gap-1by10 ml-auto'>
-				<div className='icon'>
-					<FavoriteBorderOutlinedIcon fontSize='small' />
-				</div>
-				<p>0</p>
+				{isCommentAlreadyLiked() ? (
+					<div className='icon' onClick={handleCommentLike}>
+						<FavoriteIcon color='error' fontSize='small' />
+					</div>
+				) : (
+					<div className='icon' onClick={handleCommentLike}>
+						<FavoriteBorderOutlinedIcon fontSize='small' />
+					</div>
+				)}
+				<p>{comment.likes.length}</p>
 			</div>
 		</div>
 	)

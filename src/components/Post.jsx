@@ -32,7 +32,14 @@ function Post(props) {
 
 	function handlePostLike() {
 		if (isLoggedIn) {
-			dispatch(toggleLike(post._id, 'Post', auth.token))
+			dispatch(
+				toggleLike({
+					postId: post._id,
+					commentId: null,
+					type: 'Post',
+					bearer: auth.token,
+				})
+			)
 		} else {
 			notify({ type: 'error', msg: 'Please Log In to Like' })
 		}

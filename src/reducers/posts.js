@@ -1,6 +1,7 @@
 import {
 	CREATE_COMMENT_SUCCESS,
 	CREATE_POST_SUCCESS,
+	TOGGLE_COMMENT_LIKE_SUCCESS,
 	TOGGLE_POST_LIKE_SUCCESS,
 	UPDATE_POSTS,
 } from '../actions/actionTypes'
@@ -33,6 +34,28 @@ export const postsReducer = (state = [], action) => {
 								: post.likes.filter(
 										(like) => like._id !== action.payload.existingLike._id
 								  ),
+					  }
+					: post
+			)
+		}
+		case TOGGLE_COMMENT_LIKE_SUCCESS: {
+			return state.map((post) =>
+				post._id === action.payload.postId
+					? {
+							...post,
+							comments: post.comments.map((comment) =>
+								comment._id === action.payload.commentId
+									? {
+											...comment,
+											likes: !action.payload.deleted
+												? [action.payload.newLike, ...comment.likes]
+												: comment.likes.filter(
+														(like) =>
+															like._id !== action.payload.existingLike._id
+												  ),
+									  }
+									: comment
+							),
 					  }
 					: post
 			)

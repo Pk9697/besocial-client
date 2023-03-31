@@ -1,6 +1,7 @@
 import {
 	CREATE_COMMENT_SUCCESS,
 	CREATE_POST_SUCCESS,
+	DELETE_COMMENT_SUCCESS,
 	DELETE_POST_SUCCESS,
 	TOGGLE_COMMENT_LIKE_SUCCESS,
 	TOGGLE_POST_LIKE_SUCCESS,
@@ -34,6 +35,9 @@ export const commentsReducer = (state = [], action) => {
 					  }
 					: comment
 			)
+		}
+		case DELETE_COMMENT_SUCCESS: {
+			return state.filter((comment) => comment._id !== action.payload.commentId)
 		}
 		default:
 			return state
@@ -80,6 +84,16 @@ export const postsReducer = (state = [], action) => {
 		}
 		case DELETE_POST_SUCCESS: {
 			return state.filter((post) => post._id !== action.payload.postId)
+		}
+		case DELETE_COMMENT_SUCCESS: {
+			return state.map((post) =>
+				post._id === action.payload.postId
+					? {
+							...post,
+							comments: commentsReducer(post.comments, action),
+					  }
+					: post
+			)
 		}
 		default:
 			return state

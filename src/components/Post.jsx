@@ -10,7 +10,7 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { addFriend, removeFriend } from '../actions/friends'
 import CommentsList from './CommentsList'
 import { deletePost, toggleLike } from '../actions/posts'
-import { notify } from '../helpers/commonFunctions'
+import { doesExist, notify } from '../helpers/commonFunctions'
 
 function Post(props) {
 	const auth = useSelector((state) => state.auth)
@@ -51,7 +51,7 @@ function Post(props) {
 				<Link to={`/profile/${post.user._id}`} className='user'>
 					<img
 						className='user__img'
-						src={`http://localhost:4001${post.user.avatar}`}
+						src={doesExist(post.user.avatar)}
 						alt='user_pic'
 					/>
 					<h5 className='user__name'>{post.user.name}</h5>
@@ -109,7 +109,11 @@ function Post(props) {
 				<hr style={{ width: '100%' }} />
 			)}
 
-			<CommentsList comments={post.comments} postId={post._id} />
+			<CommentsList
+				comments={post.comments}
+				postId={post._id}
+				postUserId={post.user._id}
+			/>
 		</div>
 	)
 }

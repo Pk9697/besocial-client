@@ -17,4 +17,6 @@ export const APIUrls = {
 	createComment: () => `${API_ROOT}/comments/create`,
 	toggleLike: (id, type) => `${API_ROOT}/likes/toggle/?id=${id}&type=${type}`,
 	deletePost: (postId) => `${API_ROOT}/posts/delete/${postId}`,
+	deleteComment: (commentId, postUserId) =>
+		`${API_ROOT}/comments/delete/?commentId=${commentId}&postUserId=${postUserId}`,
 }

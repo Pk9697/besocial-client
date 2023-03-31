@@ -8,6 +8,7 @@ import {
 	TOGGLE_POST_LIKE_SUCCESS,
 	TOGGLE_COMMENT_LIKE_SUCCESS,
 	DELETE_POST_SUCCESS,
+	DELETE_COMMENT_SUCCESS,
 } from './actionTypes'
 
 export function fetchPosts() {
@@ -173,6 +174,34 @@ export function deletePost(postId, bearer) {
 			.then((data) => {
 				if (data.success) {
 					dispatch(deletePostSuccess({ postId }))
+					notify({ type: 'success', msg: data.message })
+				} else {
+					notify({ type: 'error', msg: data.message })
+				}
+			})
+	}
+}
+export function deleteCommentSuccess(data) {
+	return {
+		type: DELETE_COMMENT_SUCCESS,
+		payload: data,
+	}
+}
+
+export function deleteComment(postId, commentId, postUserId, bearer) {
+	return (dispatch) => {
+		const url = APIUrls.deleteComment(commentId, postUserId)
+		fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${bearer}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.success) {
+					dispatch(deleteCommentSuccess({ postId, commentId }))
 					notify({ type: 'success', msg: data.message })
 				} else {
 					notify({ type: 'error', msg: data.message })

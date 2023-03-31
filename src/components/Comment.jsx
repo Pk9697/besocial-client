@@ -2,15 +2,16 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
 
 import { doesExist, notify } from '../helpers/commonFunctions'
-import { toggleLike } from '../actions/posts'
+import { deleteComment, toggleLike } from '../actions/posts'
 
 function Comment(props) {
 	const dispatch = useDispatch()
 	const auth = useSelector((state) => state.auth)
 	const { isLoggedIn } = auth
-	const { comment } = props
+	const { comment, postId, postUserId } = props
 
 	function isCommentAlreadyLiked() {
 		return Boolean(
@@ -18,11 +19,19 @@ function Comment(props) {
 		)
 	}
 
+	function isLoggedInUser(userId) {
+		return userId === auth.user._id
+	}
+
+	function isLoggedInUserPost() {
+		return postUserId === auth.user._id
+	}
+
 	function handleCommentLike() {
 		if (isLoggedIn) {
 			dispatch(
 				toggleLike({
-					postId: props.postId,
+					postId,
 					commentId: comment._id,
 					type: 'Comment',
 					bearer: auth.token,
@@ -45,6 +54,19 @@ function Comment(props) {
 				<p className='post__content'>{comment.content}</p>
 			</div>
 			<div className='post__likes gap-1by10 ml-auto'>
+				{isLoggedIn &&
+					(isLoggedInUserPost() || isLoggedInUser(comment.user._id)) && (
+						<div
+							className='user__icon icon ml-auto'
+							onClick={() =>
+								dispatch(
+									deleteComment(postId, comment._id, postUserId, auth.token)
+								)
+							}
+						>
+							<DeleteForeverOutlinedIcon fontSize='small' />
+						</div>
+					)}
 				{isCommentAlreadyLiked() ? (
 					<div className='icon' onClick={handleCommentLike}>
 						<FavoriteIcon color='error' fontSize='small' />

@@ -1,6 +1,7 @@
 import {
 	CREATE_COMMENT_SUCCESS,
 	CREATE_POST_SUCCESS,
+	DELETE_POST_SUCCESS,
 	TOGGLE_COMMENT_LIKE_SUCCESS,
 	TOGGLE_POST_LIKE_SUCCESS,
 	UPDATE_POSTS,
@@ -76,6 +77,9 @@ export const postsReducer = (state = [], action) => {
 					  }
 					: post
 			)
+		}
+		case DELETE_POST_SUCCESS: {
+			return state.filter((post) => post._id !== action.payload.postId)
 		}
 		default:
 			return state

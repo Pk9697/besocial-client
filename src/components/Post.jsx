@@ -6,9 +6,10 @@ import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
 import { addFriend, removeFriend } from '../actions/friends'
 import CommentsList from './CommentsList'
-import { toggleLike } from '../actions/posts'
+import { deletePost, toggleLike } from '../actions/posts'
 import { notify } from '../helpers/commonFunctions'
 
 function Post(props) {
@@ -73,7 +74,14 @@ function Post(props) {
 						</div>
 					)
 				) : (
-					<></>
+					isLoggedIn && (
+						<div
+							className='user__icon icon ml-auto'
+							onClick={() => dispatch(deletePost(post._id, auth.token))}
+						>
+							<DeleteForeverOutlinedIcon />
+						</div>
+					)
 				)}
 			</div>
 			<p className='post__content'>{post.content}</p>

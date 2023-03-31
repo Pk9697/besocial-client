@@ -6,6 +6,39 @@ import {
 	UPDATE_POSTS,
 } from '../actions/actionTypes'
 
+export const likesReducer = (state = [], action) => {
+	switch (action.type) {
+		case TOGGLE_COMMENT_LIKE_SUCCESS:
+		case TOGGLE_POST_LIKE_SUCCESS: {
+			return !action.payload.deleted
+				? [action.payload.newLike, ...state]
+				: state.filter((like) => like._id !== action.payload.existingLike._id)
+		}
+		default:
+			return state
+	}
+}
+
+export const commentsReducer = (state = [], action) => {
+	switch (action.type) {
+		case CREATE_COMMENT_SUCCESS: {
+			return [action.payload.comment, ...state]
+		}
+		case TOGGLE_COMMENT_LIKE_SUCCESS: {
+			return state.map((comment) =>
+				comment._id === action.payload.commentId
+					? {
+							...comment,
+							likes: likesReducer(comment.likes, action),
+					  }
+					: comment
+			)
+		}
+		default:
+			return state
+	}
+}
+
 export const postsReducer = (state = [], action) => {
 	switch (action.type) {
 		case UPDATE_POSTS: {
@@ -19,7 +52,7 @@ export const postsReducer = (state = [], action) => {
 				post._id === action.payload.postId
 					? {
 							...post,
-							comments: [action.payload.comment, ...post.comments],
+							comments: commentsReducer(post.comments, action),
 					  }
 					: post
 			)
@@ -29,11 +62,7 @@ export const postsReducer = (state = [], action) => {
 				post._id === action.payload.postId
 					? {
 							...post,
-							likes: !action.payload.deleted
-								? [action.payload.newLike, ...post.likes]
-								: post.likes.filter(
-										(like) => like._id !== action.payload.existingLike._id
-								  ),
+							likes: likesReducer(post.likes, action),
 					  }
 					: post
 			)
@@ -43,19 +72,7 @@ export const postsReducer = (state = [], action) => {
 				post._id === action.payload.postId
 					? {
 							...post,
-							comments: post.comments.map((comment) =>
-								comment._id === action.payload.commentId
-									? {
-											...comment,
-											likes: !action.payload.deleted
-												? [action.payload.newLike, ...comment.likes]
-												: comment.likes.filter(
-														(like) =>
-															like._id !== action.payload.existingLike._id
-												  ),
-									  }
-									: comment
-							),
+							comments: commentsReducer(post.comments, action),
 					  }
 					: post
 			)

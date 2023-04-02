@@ -10,16 +10,8 @@ function Profile() {
 	const dispatch = useDispatch()
 	const { userId } = useParams()
 	const auth = useSelector((state) => state.auth)
-	if (userId === auth.user._id) {
-		console.log('Navigate to settings')
-		return <Navigate to='/settings' />
-	}
 	const profile = useSelector((state) => state.profile)
-	const { user, inProgress, error } = profile
-	const { name, email, avatar } = user
 	const friends = useSelector((state) => state.friends)
-	const { friendsArr } = friends
-
 	useEffect(() => {
 		if (userId) {
 			//dispatch an action
@@ -29,7 +21,14 @@ function Profile() {
 		return () => {
 			dispatch(clearFriendState())
 		}
-	}, [])
+	}, [userId])
+	if (userId === auth.user._id) {
+		console.log('Navigate to settings')
+		return <Navigate to='/settings' />
+	}
+	const { user, inProgress, error } = profile
+	const { name, email, avatar } = user
+	const { friendsArr } = friends
 
 	function isFriend() {
 		return Boolean(friendsArr.find((friend) => friend.to_user._id === userId))

@@ -19,4 +19,6 @@ export const APIUrls = {
 	deletePost: (postId) => `${API_ROOT}/posts/delete/${postId}`,
 	deleteComment: (commentId, postUserId) =>
 		`${API_ROOT}/comments/delete/?commentId=${commentId}&postUserId=${postUserId}`,
+	searchUser: (searchText) =>
+		`${API_ROOT}/users/search?searchText=${searchText}`,
 }

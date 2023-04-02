@@ -1,3 +1,4 @@
+//*Every request should have 3 actions Start (i.e for loading),Success and Error
 export const UPDATE_POSTS = 'UPDATE_POSTS'
 export const FETCH_POSTS_ERROR = 'FETCH_POSTS_ERROR'
 
@@ -61,3 +62,9 @@ export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
 
 //delete a comment
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
+
+//search user
+export const SEARCH_USER_START = 'SEARCH_USER_START'
+export const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
+export const SEARCH_USER_ERROR = 'SEARCH_USER_ERROR'
+export const CLEAR_SEARCH_STATE = 'CLEAR_SEARCH_STATE'

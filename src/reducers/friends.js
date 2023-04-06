@@ -50,6 +50,7 @@ export const friendsReducer = (state = initialState, action) => {
 				...state,
 				error: null,
 				success: null,
+				friendsArr: [],
 			}
 		}
 

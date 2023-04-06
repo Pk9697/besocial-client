@@ -1,70 +1,93 @@
-import React, { useEffect, useState } from 'react'
-import { useParams, Navigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { doesExist } from '../helpers/commonFunctions'
+
 import { fetchUserProfile } from '../actions/profile'
-import Alert from '../components/Alert'
-import { addFriend, clearFriendState, removeFriend } from '../actions/friends'
+import {
+	addFriend,
+	clearFriendState,
+	fetchUserFriends,
+	removeFriend,
+} from '../actions/friends'
+import UserWidget from '../components/UserWidget'
+import FriendsList from '../components/FriendsList'
+import PostsList from '../components/PostsList'
+import { clearPostsState, fetchUserPosts } from '../actions/posts'
 
 function Profile() {
 	const dispatch = useDispatch()
 	const { userId } = useParams()
-	const auth = useSelector((state) => state.auth)
-	const profile = useSelector((state) => state.profile)
-	const friends = useSelector((state) => state.friends)
+	const {
+		auth,
+		profile: { user, inProgress },
+		friends: { friendsArr },
+		posts,
+	} = useSelector((state) => state)
+
 	useEffect(() => {
 		if (userId) {
-			//dispatch an action
 			dispatch(fetchUserProfile(userId, auth.token))
+			dispatch(fetchUserPosts(userId, auth.token))
+			dispatch(fetchUserFriends(userId, auth.token))
 		}
 
 		return () => {
 			dispatch(clearFriendState())
+			dispatch(clearPostsState())
 		}
 	}, [userId])
-	if (userId === auth.user._id) {
-		console.log('Navigate to settings')
-		return <Navigate to='/settings' />
-	}
-	const { user, inProgress, error } = profile
-	const { name, email, avatar } = user
-	const { friendsArr } = friends
 
+	console.log(friendsArr)
 	function isFriend() {
-		return Boolean(friendsArr.find((friend) => friend.to_user._id === userId))
+		return Boolean(
+			auth.user.friends.find((friend) => friend.to_user._id === userId)
+		)
+	}
+
+	function handleAddFriend() {
+		dispatch(addFriend(userId, auth.token, true))
+	}
+	function handleRemoveFriend() {
+		dispatch(removeFriend(userId, auth.token, true))
+	}
+
+	function isLoggedInUser() {
+		return userId === auth.user._id
 	}
 
 	return (
-		<div className='widget-wrapper mw-700 login-wrapper mt-1'>
+		<div>
 			{inProgress ? (
 				<h3 style={{ textAlign: 'center' }}>Loading!</h3>
-			) : error ? (
-				<Alert msg={error} error={true} />
 			) : (
-				<>
-					<img
-						src={doesExist(avatar)}
-						className='user__img user__img--large'
-						alt='user_img'
-					/>
-					<h5>Name: {name}</h5>
-					<h5>Email: {email} </h5>
-					{isFriend() ? (
-						<button
-							className='login__input login__btn settings__btn'
-							onClick={() => dispatch(removeFriend(userId, auth.token))}
-						>
-							Remove Friend
-						</button>
-					) : (
-						<button
-							className='login__input login__btn settings__btn'
-							onClick={() => dispatch(addFriend(userId, auth.token))}
-						>
-							Add Friend
-						</button>
+				<div className='grid-profile'>
+					{auth.isLoggedIn && (
+						<>
+							<UserWidget
+								user={user}
+								isProfile
+								isFriend={isFriend}
+								handleAddFriend={handleAddFriend}
+								handleRemoveFriend={handleRemoveFriend}
+								isLoggedInUser={isLoggedInUser}
+							/>
+							<FriendsList
+								friendsArr={friendsArr}
+								isLoggedIn={auth.isLoggedIn}
+								token={auth.token}
+								isProfile={true}
+							/>
+							<section className='grid__section'>
+								<PostsList
+									posts={posts}
+									friendsArr={friendsArr}
+									dispatch={dispatch}
+									isProfile={true}
+								/>
+							</section>
+						</>
 					)}
-				</>
+				</div>
 			)}
 		</div>
 	)

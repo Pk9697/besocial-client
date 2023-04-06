@@ -1,18 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined'
 import { Link } from 'react-router-dom'
+import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined'
+import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
 import { doesExist } from '../helpers/commonFunctions'
-function UserWidget() {
-	const auth = useSelector((state) => state.auth)
-	const { user, isLoggedIn } = auth
-	const friends = useSelector((state) => state.friends)
-	const { friendsArr } = friends
-	if (!isLoggedIn) {
+function UserWidget(props) {
+	if (!props.user) {
 		return
 	}
-	const { avatar, name } = user
-	const friendsCount = friendsArr.length
+	const { avatar, name, friends } = props.user
+	const friendsCount = friends ? friends.length : 0
+
 	return (
 		<div className='user-widget widget-wrapper'>
 			<section className='user'>
@@ -23,9 +21,25 @@ function UserWidget() {
 						{friendsCount} friend{friendsCount > 1 ? 's' : ''}
 					</p>
 				</div>
-				<Link to='/settings' className='user__icon icon ml-auto'>
-					<ManageAccountsOutlinedIcon fontSize='small' />
-				</Link>
+				{!props.isProfile || props.isLoggedInUser() ? (
+					<Link to='/settings' className='user__icon icon ml-auto'>
+						<ManageAccountsOutlinedIcon fontSize='small' />
+					</Link>
+				) : props.isFriend() ? (
+					<div
+						className='user__icon icon ml-auto'
+						onClick={() => props.handleRemoveFriend()}
+					>
+						<PersonRemoveOutlinedIcon fontSize='small' />
+					</div>
+				) : (
+					<div
+						className='user__icon icon ml-auto'
+						onClick={() => props.handleAddFriend()}
+					>
+						<PersonAddAlt1OutlinedIcon fontSize='small' />
+					</div>
+				)}
 			</section>
 		</div>
 	)

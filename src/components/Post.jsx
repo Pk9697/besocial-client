@@ -14,13 +14,14 @@ import { doesExist, notify } from '../helpers/commonFunctions'
 
 function Post(props) {
 	const auth = useSelector((state) => state.auth)
-	const friends = useSelector((state) => state.friends)
+
 	const { isLoggedIn } = auth
-	const { friendsArr } = friends
-	const { post, dispatch } = props
+	const { post, dispatch, isProfile } = props
 
 	function isFriend(userId) {
-		return Boolean(friendsArr.find((friend) => friend.to_user._id === userId))
+		return Boolean(
+			auth.user.friends.find((friend) => friend.to_user._id === userId)
+		)
 	}
 
 	function isLoggedInUser(userId) {
@@ -61,14 +62,18 @@ function Post(props) {
 					isFriend(post.user._id) ? (
 						<div
 							className='user__icon icon ml-auto'
-							onClick={() => dispatch(removeFriend(post.user._id, auth.token))}
+							onClick={() =>
+								dispatch(removeFriend(post.user._id, auth.token, isProfile))
+							}
 						>
 							<PersonRemoveOutlinedIcon fontSize='small' />
 						</div>
 					) : (
 						<div
 							className='user__icon icon ml-auto'
-							onClick={() => dispatch(addFriend(post.user._id, auth.token))}
+							onClick={() =>
+								dispatch(addFriend(post.user._id, auth.token, isProfile))
+							}
 						>
 							<PersonAddAlt1OutlinedIcon fontSize='small' />
 						</div>

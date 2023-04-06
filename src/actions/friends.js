@@ -23,9 +23,9 @@ export function fetchUserFriendsError(errMsg) {
 		payload: errMsg,
 	}
 }
-export function fetchUserFriends(bearer) {
+export function fetchUserFriends(userId, bearer) {
 	return (dispatch) => {
-		const url = APIUrls.fetchUserFriends()
+		const url = APIUrls.fetchUserFriends(userId)
 		fetch(url, {
 			method: 'GET',
 			headers: {
@@ -58,7 +58,7 @@ export function addFriendError(errMsg) {
 	}
 }
 
-export function addFriend(userId, bearer) {
+export function addFriend(userId, bearer, isProfile = false) {
 	return (dispatch) => {
 		const url = APIUrls.addFriend(userId)
 		fetch(url, {
@@ -71,12 +71,14 @@ export function addFriend(userId, bearer) {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.success) {
-					dispatch(
-						addFriendSuccess({
-							friendship: data.data.friendship,
-							msg: data.message,
-						})
-					)
+					if (!isProfile) {
+						dispatch(
+							addFriendSuccess({
+								friendship: data.data.friendship,
+								msg: data.message,
+							})
+						)
+					}
 					dispatch(
 						authenticateUserSuccess({
 							user: data.data.loggedInUser,
@@ -111,7 +113,7 @@ export function removeFriendError(errMsg) {
 	}
 }
 
-export function removeFriend(userId, bearer) {
+export function removeFriend(userId, bearer, isProfile = false) {
 	return (dispatch) => {
 		const url = APIUrls.removeFriend(userId)
 		fetch(url, {
@@ -125,7 +127,9 @@ export function removeFriend(userId, bearer) {
 			.then((data) => {
 				console.log(data)
 				if (data.success) {
-					dispatch(removeFriendSuccess({ msg: data.message, userId }))
+					if (!isProfile) {
+						dispatch(removeFriendSuccess({ msg: data.message, userId }))
+					}
 					dispatch(
 						authenticateUserSuccess({
 							user: data.data.loggedInUser,

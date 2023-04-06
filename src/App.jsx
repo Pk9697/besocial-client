@@ -5,34 +5,32 @@ import {
 	Route,
 	Navigate,
 } from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
+import jwt_decode from 'jwt-decode'
 import 'react-toastify/dist/ReactToastify.css'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
-import { authenticateUser } from './actions/auth'
 import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
-import { fetchUserFriends } from './actions/friends'
-import { fetchPosts } from './actions/posts'
-import { fetchAllUsers } from './actions/users'
+import { authenticateUser } from './actions/auth'
+
 function App() {
 	const dispatch = useDispatch()
-	const auth = useSelector((state) => state.auth)
-	const { isLoggedIn } = auth
+	const {
+		auth: { isLoggedIn },
+	} = useSelector((state) => state)
+
 	useEffect(() => {
-		dispatch(fetchPosts())
 		const token = localStorage.getItem('token')
 		if (token) {
 			const user = jwt_decode(token)
+			console.log('user decoded', user)
 			dispatch(authenticateUser({ user, token }))
-			dispatch(fetchUserFriends(token))
-			dispatch(fetchAllUsers(token))
 		}
 	}, [])
 

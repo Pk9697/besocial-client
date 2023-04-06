@@ -125,7 +125,8 @@ h6 {
 	gap: 1.5em;
 }
 
-.grid {
+.grid,
+.grid-profile {
 	/* padding: var(--pad); */
 	padding: var(--pad) 6%;
 	display: flex;
@@ -144,8 +145,13 @@ h6 {
 	margin: 0 auto;
 }
 
+.grid-profile {
+	max-width: 1500px;
+}
+
 @media (min-width: 700px) {
-	.grid {
+	.grid,
+	.grid-profile {
 		display: grid;
 		grid-template-columns: 2fr 1fr;
 		align-items: start;
@@ -154,6 +160,13 @@ h6 {
 			'section user'
 			'section friends'
 			'section allusers'
+			'section .';
+	}
+
+	.grid-profile {
+		grid-template-areas:
+			'section user'
+			'section friends'
 			'section .';
 	}
 

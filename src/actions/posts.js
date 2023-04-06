@@ -9,11 +9,12 @@ import {
 	TOGGLE_COMMENT_LIKE_SUCCESS,
 	DELETE_POST_SUCCESS,
 	DELETE_COMMENT_SUCCESS,
+	CLEAR_POSTS_STATE,
 } from './actionTypes'
 
-export function fetchPosts() {
+export function fetchAllPosts() {
 	return (dispatch) => {
-		const url = APIUrls.fetchPosts()
+		const url = APIUrls.fetchAllPosts()
 		fetch(url)
 			.then((res) => res.json())
 			.then((data) => {
@@ -26,6 +27,33 @@ export function fetchPosts() {
 					})
 				}
 			})
+	}
+}
+
+export function fetchUserPosts(userId, bearer) {
+	return (dispatch) => {
+		const url = APIUrls.fetchUserPosts(userId)
+		fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${bearer}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.success) {
+					dispatch(updatePosts(data.data.posts))
+				} else {
+					notify({ type: 'error', msg: data.message })
+				}
+			})
+	}
+}
+
+export function clearPostsState() {
+	return {
+		type: CLEAR_POSTS_STATE,
 	}
 }
 

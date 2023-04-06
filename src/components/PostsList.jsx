@@ -1,20 +1,13 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchPosts } from '../actions/posts'
+import React from 'react'
 import Post from './Post'
 
-function PostsList() {
-	const dispatch = useDispatch()
-	const posts = useSelector((state) => state.posts)
-
-	useEffect(() => {
-		dispatch(fetchPosts())
-	}, [])
+function PostsList(props) {
+	const { posts, ...rest } = props
 
 	return (
 		<div className='postslist-widget posts-container flex-col'>
 			{posts.map((post) => (
-				<Post key={post._id} post={post} dispatch={dispatch} />
+				<Post key={post._id} post={post} {...rest} />
 			))}
 		</div>
 	)

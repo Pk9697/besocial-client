@@ -1,28 +1,31 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
+import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined'
+
 import { Link } from 'react-router-dom'
 import { doesExist } from '../helpers/commonFunctions'
-import {
-	clearFriendState,
-	fetchUserFriends,
-	removeFriend,
-} from '../actions/friends'
-function FriendsList() {
+import { addFriend, removeFriend } from '../actions/friends'
+function FriendsList(props) {
 	const dispatch = useDispatch()
-	const auth = useSelector((state) => state.auth)
-	const friends = useSelector((state) => state.friends)
-	const { friendsArr } = friends
-	const { isLoggedIn } = auth
-	useEffect(() => {
-		dispatch(fetchUserFriends(auth.token))
-		return () => {
-			dispatch(clearFriendState())
-		}
-	}, [])
+	const { auth } = useSelector((state) => state)
+	const {
+		user: { friends: loggedInUserFriends },
+	} = auth
+	const { friendsArr, isLoggedIn, token } = props
 
 	if (!isLoggedIn) {
 		return
+	}
+
+	function isFriend(userId) {
+		return Boolean(
+			loggedInUserFriends.some((friend) => friend.to_user._id === userId)
+		)
+	}
+
+	function isLoggedInUser(userId) {
+		return userId === auth.user._id
 	}
 
 	return (
@@ -39,14 +42,33 @@ function FriendsList() {
 							/>
 							<h5 className='user__name'>{friend.to_user.name}</h5>
 						</Link>
-						<div
-							className='user__icon icon ml-auto'
-							onClick={() =>
-								dispatch(removeFriend(friend.to_user._id, auth.token))
-							}
-						>
-							<PersonRemoveOutlinedIcon fontSize='small' />
-						</div>
+						{!isLoggedInUser(friend.to_user._id) ? (
+							isFriend(friend.to_user._id) ? (
+								<div
+									className='user__icon icon ml-auto'
+									onClick={() =>
+										dispatch(
+											removeFriend(friend.to_user._id, token, props.isProfile)
+										)
+									}
+								>
+									<PersonRemoveOutlinedIcon fontSize='small' />
+								</div>
+							) : (
+								<div
+									className='user__icon icon ml-auto'
+									onClick={() =>
+										dispatch(
+											addFriend(friend.to_user._id, token, props.isProfile)
+										)
+									}
+								>
+									<PersonAddAlt1OutlinedIcon fontSize='small' />
+								</div>
+							)
+						) : (
+							<></>
+						)}
 					</div>
 				))
 			) : (

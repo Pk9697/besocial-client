@@ -1,4 +1,5 @@
 import {
+	CLEAR_POSTS_STATE,
 	CREATE_COMMENT_SUCCESS,
 	CREATE_POST_SUCCESS,
 	DELETE_COMMENT_SUCCESS,
@@ -94,6 +95,9 @@ export const postsReducer = (state = [], action) => {
 					  }
 					: post
 			)
+		}
+		case CLEAR_POSTS_STATE: {
+			return []
 		}
 		default:
 			return state

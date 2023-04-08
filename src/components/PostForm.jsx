@@ -5,6 +5,8 @@ import { doesExist } from '../helpers/commonFunctions'
 import { createPost } from '../actions/posts'
 function PostForm() {
 	const dispatch = useDispatch()
+	const [postImg, setPostImg] = useState(null)
+
 	const [formFields, setFormFields] = useState({
 		content: '',
 	})
@@ -23,13 +25,22 @@ function PostForm() {
 		}))
 	}
 
-	function handleClick(e) {
+	function handleImage(e) {
+		setPostImg(e.target.files[0])
+	}
+
+	function handleSubmit(e) {
 		e.preventDefault()
-		//dispatch an action
-		dispatch(createPost(formFields, auth.token))
+		const formData = new FormData()
+		formData.append('content', formFields.content)
+		if (postImg) {
+			formData.append('postImg', postImg)
+		}
+		dispatch(createPost(formData, auth.token))
 		setFormFields({
 			content: '',
 		})
+		setPostImg(null)
 	}
 
 	return (
@@ -47,19 +58,24 @@ function PostForm() {
 				/>
 			</section>
 			<hr style={{ width: '100%' }} />
-			<section className='post-form__section2'>
-				<div className='post-form__addimage'>
+			<form
+				onSubmit={handleSubmit}
+				className='post-form__section2'
+				encType='multipart/form-data'
+			>
+				<label htmlFor='avatar' className='post-form__addimage'>
 					<AddPhotoAlternateOutlinedIcon />
-					<p>Image</p>
-				</div>
+					<p>{postImg ? postImg.name : 'Choose Image'}</p>
+				</label>
+				<input id='avatar' name='avatar' type='file' onChange={handleImage} />
 				<button
-					onClick={handleClick}
-					disabled={formFields.content.length === 0}
+					type='submit'
+					disabled={formFields.content.length === 0 && !postImg}
 					className='post-btn'
 				>
 					POST
 				</button>
-			</section>
+			</form>
 		</div>
 	)
 }

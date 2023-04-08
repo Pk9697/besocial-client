@@ -8,6 +8,10 @@ export function doesExist(imgavatar) {
 	return avatar
 }
 
+export function postImgSrc(postImg) {
+	return BASE_ROOT + postImg
+}
+
 export function notify({ type, msg = 'Default' }) {
 	if (type === 'success') {
 		return toast.success(msg, {

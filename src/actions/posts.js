@@ -71,16 +71,16 @@ export function createPostSuccess(post) {
 	}
 }
 
-export function createPost(formFields, bearer) {
+export function createPost(formData, bearer) {
 	return (dispatch) => {
 		const url = APIUrls.createPost()
 		fetch(url, {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
+				// 'Content-Type': 'application/json',
 				Authorization: `Bearer ${bearer}`,
 			},
-			body: JSON.stringify(formFields),
+			body: formData,
 		})
 			.then((res) => res.json())
 			.then((data) => {

@@ -10,7 +10,7 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { addFriend, removeFriend } from '../actions/friends'
 import CommentsList from './CommentsList'
 import { deletePost, toggleLike } from '../actions/posts'
-import { doesExist, notify } from '../helpers/commonFunctions'
+import { doesExist, notify, postImgSrc } from '../helpers/commonFunctions'
 
 function Post(props) {
 	const auth = useSelector((state) => state.auth)
@@ -89,6 +89,15 @@ function Post(props) {
 					)
 				)}
 			</div>
+			{post.postImg && (
+				<div className='post-img-container'>
+					<img
+						className='post-img'
+						src={postImgSrc(post.postImg)}
+						alt='post_img'
+					/>
+				</div>
+			)}
 			<p className='post__content'>{post.content}</p>
 			<div className='post__interactions'>
 				<div className='post__likes'>

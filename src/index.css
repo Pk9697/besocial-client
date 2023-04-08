@@ -240,6 +240,21 @@ h6 {
 	box-shadow: var(--bs2);
 }
 
+.post-img-container {
+	height: 500px;
+	/* width: 240px;
+	height: 180px; */
+	margin: 0 auto;
+}
+.post-img {
+	object-fit: contain;
+	height: 100%;
+	/* overflow: hidden; */
+	/* max-width: unset; */
+	/* height: 100%; */
+	/* aspect-ratio: 4/1; */
+}
+
 .user__img--large {
 	width: 100px;
 	height: 100px;
@@ -444,6 +459,7 @@ h6 {
 }
 .post-form__addimage {
 	display: flex;
+	align-items: center;
 	cursor: pointer;
 	gap: 0.3em;
 }

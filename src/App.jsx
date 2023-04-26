@@ -18,12 +18,13 @@ import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import PrivateRoute from './components/PrivateRoute'
 import { authenticateUser } from './actions/auth'
+import ChatBox from './components/ChatBox'
 
 function App() {
 	const dispatch = useDispatch()
 	const {
 		auth: { isLoggedIn },
-	} = useSelector((state) => state)
+	} = useSelector(state => state)
 
 	useEffect(() => {
 		const token = localStorage.getItem('token')
@@ -38,6 +39,7 @@ function App() {
 		<Router>
 			<div className='app'>
 				<Navbar />
+				{isLoggedIn && <ChatBox />}
 				<Routes>
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />

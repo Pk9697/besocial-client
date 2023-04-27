@@ -689,13 +689,13 @@ h6 {
 	border-bottom-right-radius: 0px;
 }
 
-@media (min-width: 400px) {
+/* @media (min-width: 400px) {
 	.msg-details {
 		display: flex;
 		align-items: center;
 		gap: 1em;
 	}
-}
+} */
 .time {
 	font-size: 0.8rem;
 	color: #828282;

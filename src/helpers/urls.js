@@ -24,4 +24,6 @@ export const APIUrls = {
 	searchUser: (searchText) =>
 		`${API_ROOT}/users/search?searchText=${searchText}`,
 	fetchUserPosts: (userId) => `${API_ROOT}/posts/${userId}`,
+	fetchChatRoomChats: (chatRoom) => `${API_ROOT}/chats/?chatRoom=${chatRoom}`,
+	createChat: () => `${API_ROOT}/chats/create`,
 }

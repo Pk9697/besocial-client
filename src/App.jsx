@@ -23,7 +23,7 @@ import ChatBox from './components/ChatBox'
 function App() {
 	const dispatch = useDispatch()
 	const {
-		auth: { isLoggedIn, user },
+		auth: { isLoggedIn, user, token },
 	} = useSelector((state) => state)
 
 	useEffect(() => {
@@ -39,7 +39,7 @@ function App() {
 		<Router>
 			<div className='app'>
 				<Navbar />
-				{isLoggedIn && <ChatBox user={user} />}
+				{isLoggedIn && <ChatBox user={user} bearer={token} />}
 				<Routes>
 					<Route path='/' element={<Home />} />
 					<Route path='/login' element={<Login />} />

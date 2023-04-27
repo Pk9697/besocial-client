@@ -1,10 +1,55 @@
-import React, { useState } from 'react'
-import { doesExist } from '../helpers/commonFunctions'
+import React, { useEffect, useState } from 'react'
+import { io } from 'socket.io-client'
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined'
 import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined'
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined'
-function ChatBox() {
+import { doesExist } from '../helpers/commonFunctions'
+import { CHAT_SERVER } from '../helpers/urls'
+function ChatBox({ user }) {
 	const [isMinimized, setIsMinimized] = useState(false)
+	const [messages, setMessages] = useState([])
+	const [typedMessage, setTypedMessage] = useState('')
+	const [socket, setSocket] = useState(null)
+	useEffect(() => {
+		if (!socket) {
+			setSocket(io(`${CHAT_SERVER}`))
+		} else {
+			setupConnections()
+		}
+	}, [socket])
+
+	const setupConnections = () => {
+		socket.on('connect', () => {
+			console.log('connection established using sockets...!')
+			socket.emit('join_room', {
+				user,
+				chatroom: 'codeial',
+			})
+			socket.on('user_joined', (data) => {
+				console.log('a user joined...!', data)
+			})
+		})
+
+		socket.on('receive_msg', (data) => {
+			console.log('message recieved...!', data.msg)
+			const msgObj = { msg: data.msg, name: data.user.name }
+			if (data.user._id === user._id) {
+				msgObj.self = true
+			}
+			setMessages((prev) => [...prev, msgObj])
+		})
+	}
+
+	const handleClick = (e) => {
+		e.preventDefault()
+		socket.emit('send_msg', {
+			msg: typedMessage,
+			user,
+			chatroom: 'codeial',
+		})
+		setTypedMessage('')
+	}
+
 	return (
 		<div
 			className={`widget-wrapper chat-box ${
@@ -32,38 +77,22 @@ function ChatBox() {
 			{!isMinimized && (
 				<>
 					<div className='chat-box__body'>
-						<div className='other-msg'>
-							<p>Other message</p>
-							<div className='msg-details'>
-								<h5 className='user__name'>Bill Gates</h5>
-								<p className='time'>a minute ago</p>
+						{messages.map(({ msg, name, self }, index) => (
+							<div
+								key={`msg-${index}`}
+								className={self ? 'self-msg' : 'other-msg'}
+							>
+								<p>{msg}</p>
+								<div className='msg-details'>
+									<h5 className='user__name'>{name}</h5>
+									<p className='time'>a minute ago</p>
+								</div>
 							</div>
-						</div>
-						<div className='self-msg'>
-							<p>Self message</p>
-							<div className='msg-details'>
-								<h5 className='user__name'>You</h5>
-								<p className='time'>a minute ago</p>
-							</div>
-						</div>
-						<div className='other-msg'>
-							<p>Other message</p>
-							<div className='msg-details'>
-								<h5 className='user__name'>Bill Gates</h5>
-								<p className='time'>a minute ago</p>
-							</div>
-						</div>
-						<div className='other-msg'>
-							<p>Other msg</p>
-							<div className='msg-details'>
-								<h5 className='user__name'>Bill Gates</h5>
-								<p className='time'>a minute ago</p>
-							</div>
-						</div>
+						))}
 					</div>
 					<div className='chat-box__input comment-form'>
 						<img
-							src={doesExist('')}
+							src={doesExist(user.avatar)}
 							className='user__img comment-form__img'
 							alt='user_pic'
 						/>
@@ -73,13 +102,13 @@ function ChatBox() {
 							placeholder={`Send msg...`}
 							rows='1'
 							name='content'
-							// value={formFields.content}
-							// onChange={handleChange}
+							value={typedMessage}
+							onChange={(e) => setTypedMessage(e.target.value)}
 						/>
 						<button
 							className='user__icon icon ml-auto comment-btn'
-							// onClick={handleClick}
-							// disabled={formFields.content.length === 0}
+							onClick={handleClick}
+							disabled={typedMessage.length === 0}
 						>
 							<SendOutlinedIcon />
 						</button>

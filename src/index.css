@@ -241,14 +241,16 @@ h6 {
 }
 
 .post-img-container {
-	height: 500px;
+	/* max-height: 500px; */
 	/* width: 240px;
 	height: 180px; */
 	margin: 0 auto;
 }
 .post-img {
-	object-fit: contain;
-	height: 100%;
+	object-fit: cover;
+	/* height: 100%; */
+	max-height: 500px;
+
 	/* overflow: hidden; */
 	/* max-width: unset; */
 	/* height: 100%; */
@@ -631,7 +633,9 @@ h6 {
 	bottom: 0;
 	z-index: 2;
 	position: fixed;
-	width: 90%;
+	/* width: 90%; */
+	margin-left: 1em;
+	min-width: unset;
 	max-width: 400px;
 	/* background-color: #006b7d; */
 	box-shadow: var(--bs2);

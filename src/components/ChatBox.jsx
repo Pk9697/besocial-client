@@ -117,7 +117,7 @@ function ChatBox({ user, bearer }) {
 			} `}
 		>
 			<div className='chat-box__header'>
-				<h4>Group Chat</h4>
+				{!isMinimized && <h4>Group Chat</h4>}
 				{!isMinimized ? (
 					<button
 						className='user__icon icon ml-auto comment-btn'

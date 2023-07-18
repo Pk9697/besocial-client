@@ -1,6 +1,10 @@
-export const API_ROOT = `http://localhost:4001/api/v1`
-export const BASE_ROOT = `http://localhost:4001`
-export const CHAT_SERVER = `http://localhost:5000`
+const CLOUD_IP = import.meta.env.VITE_CLOUD_IP
+const SERVER_PORT = import.meta.env.VITE_SERVER_PORT
+const CHAT_SERVER_PORT = import.meta.env.VITE_CHAT_SERVER_PORT
+
+export const API_ROOT = `${CLOUD_IP}:${SERVER_PORT}/api/v1`
+export const BASE_ROOT = `${CLOUD_IP}:${SERVER_PORT}`
+export const CHAT_SERVER = `${CLOUD_IP}:${CHAT_SERVER_PORT}`
 export const APIUrls = {
 	login: () => `${API_ROOT}/users/login`,
 	register: () => `${API_ROOT}/users/register`,

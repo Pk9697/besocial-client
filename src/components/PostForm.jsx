@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined'
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { doesExist } from '../helpers/commonFunctions'
 import { createPost } from '../actions/posts'
 function PostForm() {
@@ -27,6 +28,7 @@ function PostForm() {
 
 	function handleImage(e) {
 		setPostImg(e.target.files[0])
+		e.target.value=null
 	}
 
 	function handleSubmit(e) {
@@ -67,6 +69,11 @@ function PostForm() {
 					<AddPhotoAlternateOutlinedIcon />
 					<p>{postImg ? postImg.name : 'Choose Image'}</p>
 				</label>
+				{postImg && 
+					<div className='user__icon icon ml-1' onClick={()=>setPostImg(null)}>
+						<ClearOutlinedIcon fontSize='small'/>
+					</div>
+				}
 				<input id='avatar' name='avatar' type='file' onChange={handleImage} />
 				<button
 					type='submit'

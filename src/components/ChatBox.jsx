@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { io } from 'socket.io-client'
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined'
 import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined'
@@ -10,6 +10,7 @@ function ChatBox({ user, bearer }) {
 	const [messages, setMessages] = useState([])
 	const [typedMessage, setTypedMessage] = useState('')
 	const [socket, setSocket] = useState(null)
+	const ref = useRef(null)
 
 	useEffect(() => {
 		const fetchChats = () => {
@@ -44,6 +45,14 @@ function ChatBox({ user, bearer }) {
 			setupConnections()
 		}
 	}, [socket])
+
+	useEffect(() => {
+		const scrollToLastChild = () => {
+			const lastChildElement = ref.current?.lastElementChild
+			lastChildElement?.scrollIntoView({ behavior: 'smooth' })
+		}
+		scrollToLastChild()
+	}, [messages, isMinimized])
 
 	const setupConnections = () => {
 		socket.on('connect', () => {
@@ -136,7 +145,7 @@ function ChatBox({ user, bearer }) {
 			</div>
 			{!isMinimized && (
 				<>
-					<div className='chat-box__body'>
+					<div className='chat-box__body' ref={ref}>
 						{messages.map(({ msg, name, self, createdAt }, index) => (
 							<div
 								key={`msg-${index}`}

@@ -499,6 +499,12 @@ h6 {
 	margin-bottom: 1em;
 }
 
+.ml-1 {
+	margin-left: 1em;
+}
+
+
+
 .login-wrapper {
 	gap: 2em;
 }

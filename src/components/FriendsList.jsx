@@ -29,51 +29,53 @@ function FriendsList(props) {
 	}
 
 	return (
-		<div className='friendslist-widget widget-wrapper'>
+		<div className='widget-wrapper friendslist-widget '>
 			<h4>Friends List</h4>
-			{friendsArr.length > 0 ? (
-				friendsArr.map((friend) => (
-					<div key={friend._id} className='user'>
-						<Link to={`/profile/${friend.to_user._id}`} className='user'>
-							<img
-								src={doesExist(friend.to_user.avatar)}
-								className='user__img'
-								alt='friend_pic'
-							/>
-							<h5 className='user__name'>{friend.to_user.name}</h5>
-						</Link>
-						{!isLoggedInUser(friend.to_user._id) ? (
-							isFriend(friend.to_user._id) ? (
-								<div
-									className='user__icon icon ml-auto'
-									onClick={() =>
-										dispatch(
-											removeFriend(friend.to_user._id, token, props.isProfile)
-										)
-									}
-								>
-									<PersonRemoveOutlinedIcon fontSize='small' />
-								</div>
+			<div className='users'>
+				{friendsArr.length > 0 ? (
+					friendsArr.map((friend) => (
+						<div key={friend._id} className='user user-mobile'>
+							<Link to={`/profile/${friend.to_user._id}`} className='user'>
+								<img
+									src={doesExist(friend.to_user.avatar)}
+									className='user__img'
+									alt='friend_pic'
+								/>
+								<h5 className='user__name'>{friend.to_user.name}</h5>
+							</Link>
+							{!isLoggedInUser(friend.to_user._id) ? (
+								isFriend(friend.to_user._id) ? (
+									<div
+										className='user__icon icon ml-auto'
+										onClick={() =>
+											dispatch(
+												removeFriend(friend.to_user._id, token, props.isProfile)
+											)
+										}
+									>
+										<PersonRemoveOutlinedIcon fontSize='small' />
+									</div>
+								) : (
+									<div
+										className='user__icon icon ml-auto'
+										onClick={() =>
+											dispatch(
+												addFriend(friend.to_user._id, token, props.isProfile)
+											)
+										}
+									>
+										<PersonAddAlt1OutlinedIcon fontSize='small' />
+									</div>
+								)
 							) : (
-								<div
-									className='user__icon icon ml-auto'
-									onClick={() =>
-										dispatch(
-											addFriend(friend.to_user._id, token, props.isProfile)
-										)
-									}
-								>
-									<PersonAddAlt1OutlinedIcon fontSize='small' />
-								</div>
-							)
-						) : (
-							<></>
-						)}
-					</div>
-				))
-			) : (
-				<h5 className='user__name'>No friends</h5>
-			)}
+								<></>
+							)}
+						</div>
+					))
+				) : (
+					<h5 className='user__name'>No friends</h5>
+				)}
+			</div>
 		</div>
 	)
 }

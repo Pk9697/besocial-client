@@ -25,39 +25,41 @@ function UsersListWidget() {
 	}
 
 	return (
-		<div className='userslist-widget widget-wrapper'>
+		<div className='widget-wrapper userslist-widget'>
 			<h4>All Users List</h4>
-			{users.map((user) => (
-				<div key={user._id} className='user'>
-					<Link to={`/profile/${user._id}`} className='user'>
-						<img
-							src={doesExist(user.avatar)}
-							className='user__img'
-							alt='friend_pic'
-						/>
-						<h5 className='user__name'>{user.name}</h5>
-					</Link>
-					{!isLoggedInUser(user._id) ? (
-						isFriend(user._id) ? (
-							<div
-								className='user__icon icon ml-auto'
-								onClick={() => dispatch(removeFriend(user._id, auth.token))}
-							>
-								<PersonRemoveOutlinedIcon fontSize='small' />
-							</div>
+			<div className='users'>
+				{users.map((user) => (
+					<div key={user._id} className='user user-mobile'>
+						<Link to={`/profile/${user._id}`} className='user'>
+							<img
+								src={doesExist(user.avatar)}
+								className='user__img'
+								alt='friend_pic'
+							/>
+							<h5 className='user__name'>{user.name}</h5>
+						</Link>
+						{!isLoggedInUser(user._id) ? (
+							isFriend(user._id) ? (
+								<div
+									className='user__icon icon ml-auto'
+									onClick={() => dispatch(removeFriend(user._id, auth.token))}
+								>
+									<PersonRemoveOutlinedIcon fontSize='small' />
+								</div>
+							) : (
+								<div
+									className='user__icon icon ml-auto'
+									onClick={() => dispatch(addFriend(user._id, auth.token))}
+								>
+									<PersonAddAlt1OutlinedIcon fontSize='small' />
+								</div>
+							)
 						) : (
-							<div
-								className='user__icon icon ml-auto'
-								onClick={() => dispatch(addFriend(user._id, auth.token))}
-							>
-								<PersonAddAlt1OutlinedIcon fontSize='small' />
-							</div>
-						)
-					) : (
-						<></>
-					)}
-				</div>
-			))}
+							<></>
+						)}
+					</div>
+				))}
+			</div>
 		</div>
 	)
 }

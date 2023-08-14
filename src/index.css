@@ -217,6 +217,19 @@ h6 {
 	min-width: 250px;
 }
 
+.users{
+	/* flex-direction: row; */
+	display: flex;
+	flex-direction: row;
+	/* overflow-y: scroll; */
+	overflow-x: scroll;
+	gap:1em;
+}
+
+.users::-webkit-scrollbar {
+	display: none;
+}
+
 /* .app {
   background-color: var(--clr-background);
   height: 100vh;
@@ -231,6 +244,18 @@ h6 {
 	gap: 0.5em;
 	text-decoration: none;
 }
+
+.user-mobile{
+	min-width: 200px;
+	width: auto;
+}
+
+@media (min-width:700px) {
+	.users{
+		flex-direction: column;
+	}
+}
+
 .user__img {
 	width: 60px;
 	height: 60px;

@@ -678,6 +678,9 @@ h6 {
 
 .chat-box--minimized {
 	height: 10vh;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .chat-box__header {

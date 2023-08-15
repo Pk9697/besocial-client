@@ -8,8 +8,8 @@ function Settings() {
 	const { user, isLoggedIn } = auth
 	const { name, email, password } = user
 	const [formFields, setFormFields] = useState({
-		name: '',
-		email: '',
+		name: user.name,
+		email: user.email,
 		password: '',
 		confirmPassword: '',
 	})
@@ -26,7 +26,7 @@ function Settings() {
 		return () => {
 			dispatch(clearErrorState())
 		}
-	}, [])
+	}, [inEditMode])
 
 	function handleChange(e) {
 		const { name, value } = e.target
@@ -54,8 +54,8 @@ function Settings() {
 		)
 		setFormFields(() => {
 			return {
-				name: '',
-				email: '',
+				name: user.name,
+				email: user.email,
 				password: '',
 				confirmPassword: '',
 			}
@@ -65,12 +65,13 @@ function Settings() {
 	}
 	function handleImage(e) {
 		setAvatar(e.target.files[0])
+		e.target.value=null
 	}
 	function handleBack(e) {
 		setFormFields(() => {
 			return {
-				name: '',
-				email: '',
+				name: user.name,
+				email: user.email,
 				password: '',
 				confirmPassword: '',
 			}
@@ -92,10 +93,10 @@ function Settings() {
 				/>
 				{!inEditMode ? (
 					<>
-						<h5>Update Picture:</h5>
+						{/* <h5>Update Picture:</h5> */}
 						<h5>Name: {name}</h5>
 						<h5>Email: {email}</h5>
-						<h5>Password: {password}</h5>
+						{/* <h5>Password: {password}</h5> */}
 					</>
 				) : (
 					<>
@@ -133,7 +134,7 @@ function Settings() {
 							onChange={handleChange}
 							className='login__input'
 							type='password'
-							placeholder='Password'
+							placeholder='New Password'
 							required
 						/>
 						<input
@@ -142,7 +143,7 @@ function Settings() {
 							onChange={handleChange}
 							className='login__input'
 							type='password'
-							placeholder='Confirm Password'
+							placeholder='Confirm New Password'
 							required
 						/>
 					</>

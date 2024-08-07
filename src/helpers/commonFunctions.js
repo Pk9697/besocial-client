@@ -5,13 +5,13 @@ const SERVER_PORT = import.meta.env.VITE_SERVER_PORT || 4001
 
 export function doesExist(imgavatar) {
 	const avatar = imgavatar
-		? BASE_ROOT + ':' + SERVER_PORT + imgavatar
+		? BASE_ROOT + imgavatar
 		: '/assets/person-outlined2.png'
 	return avatar
 }
 
 export function postImgSrc(postImg) {
-	return BASE_ROOT + ':' + SERVER_PORT + postImg
+	return BASE_ROOT + postImg
 }
 
 export function notify({ type, msg = 'Default' }) {

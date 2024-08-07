@@ -1,10 +1,7 @@
-const CLOUD_IP = import.meta.env.VITE_CLOUD_IP || 'http://127.0.0.1'
-const SERVER_PORT = import.meta.env.VITE_SERVER_PORT || 4001
-const CHAT_SERVER_PORT = import.meta.env.VITE_CHAT_SERVER_PORT || 5001
+export const API_ROOT = import.meta.env.VITE_API_ROOT
+export const BASE_ROOT = import.meta.env.VITE_BASE_ROOT
+export const CHAT_SERVER = import.meta.env.VITE_CHAT_SERVER
 
-export const API_ROOT = `${CLOUD_IP}:${SERVER_PORT}/api/v1`
-export const BASE_ROOT = `${CLOUD_IP}`
-export const CHAT_SERVER = `${CLOUD_IP}:${CHAT_SERVER_PORT}`
 export const APIUrls = {
 	login: () => `${API_ROOT}/users/login`,
 	register: () => `${API_ROOT}/users/register`,
